@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20230415113500",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "evidence",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "expiration",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "link",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Evidence",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "code",
+      "otherEntityName": "training",
+      "otherEntityRelationshipName": "evidence",
+      "ownerSide": false,
+      "relationshipName": "training",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}
