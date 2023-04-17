@@ -29,6 +29,10 @@ export const EmployeeDetail = () => {
           </dt>
           <dd>{employeeEntity.id}</dd>
           <dt>
+            <span id="jobId">Job Id</span>
+          </dt>
+          <dd>{employeeEntity.jobId}</dd>
+          <dt>
             <span id="user">User</span>
           </dt>
           <dd>{employeeEntity.user}</dd>

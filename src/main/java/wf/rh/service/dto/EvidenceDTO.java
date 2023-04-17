@@ -13,6 +13,10 @@ public class EvidenceDTO implements Serializable {
 
     private Long id;
 
+    private Long trainingId;
+
+    private Long requirentsId;
+
     @NotNull
     @Size(max = 500)
     private String description;
@@ -27,6 +31,22 @@ public class EvidenceDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTrainingId() {
+        return trainingId;
+    }
+
+    public void setTrainingId(Long trainingId) {
+        this.trainingId = trainingId;
+    }
+
+    public Long getRequirentsId() {
+        return requirentsId;
+    }
+
+    public void setRequirentsId(Long requirentsId) {
+        this.requirentsId = requirentsId;
     }
 
     public String getDescription() {
@@ -79,6 +99,8 @@ public class EvidenceDTO implements Serializable {
     public String toString() {
         return "EvidenceDTO{" +
             "id=" + getId() +
+            ", trainingId=" + getTrainingId() +
+            ", requirentsId=" + getRequirentsId() +
             ", description='" + getDescription() + "'" +
             ", expiration='" + getExpiration() + "'" +
             ", link='" + getLink() + "'" +

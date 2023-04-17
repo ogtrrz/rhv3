@@ -13,6 +13,8 @@ public class RequirentsDTO implements Serializable {
 
     private Long id;
 
+    private Long courseId;
+
     @NotNull
     @Size(max = 20)
     private String code;
@@ -29,6 +31,14 @@ public class RequirentsDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public String getCode() {
@@ -89,6 +99,7 @@ public class RequirentsDTO implements Serializable {
     public String toString() {
         return "RequirentsDTO{" +
             "id=" + getId() +
+            ", courseId=" + getCourseId() +
             ", code='" + getCode() + "'" +
             ", expirationInMonth=" + getExpirationInMonth() +
             ", kind='" + getKind() + "'" +

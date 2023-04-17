@@ -6,6 +6,14 @@
   "entityTableName": "evidence",
   "fields": [
     {
+      "fieldName": "trainingId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "requirentsId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "description",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength", "required"],

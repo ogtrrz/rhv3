@@ -34,6 +34,9 @@ import wf.rh.service.mapper.ToDoMapper;
 @WithMockUser
 class ToDoResourceIT {
 
+    private static final Long DEFAULT_EMPLOYEE_ID = 1L;
+    private static final Long UPDATED_EMPLOYEE_ID = 2L;
+
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -73,7 +76,12 @@ class ToDoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ToDo createEntity(EntityManager em) {
-        ToDo toDo = new ToDo().date(DEFAULT_DATE).description(DEFAULT_DESCRIPTION).state(DEFAULT_STATE).link(DEFAULT_LINK);
+        ToDo toDo = new ToDo()
+            .employeeId(DEFAULT_EMPLOYEE_ID)
+            .date(DEFAULT_DATE)
+            .description(DEFAULT_DESCRIPTION)
+            .state(DEFAULT_STATE)
+            .link(DEFAULT_LINK);
         return toDo;
     }
 
@@ -84,7 +92,12 @@ class ToDoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ToDo createUpdatedEntity(EntityManager em) {
-        ToDo toDo = new ToDo().date(UPDATED_DATE).description(UPDATED_DESCRIPTION).state(UPDATED_STATE).link(UPDATED_LINK);
+        ToDo toDo = new ToDo()
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .date(UPDATED_DATE)
+            .description(UPDATED_DESCRIPTION)
+            .state(UPDATED_STATE)
+            .link(UPDATED_LINK);
         return toDo;
     }
 
@@ -107,6 +120,7 @@ class ToDoResourceIT {
         List<ToDo> toDoList = toDoRepository.findAll();
         assertThat(toDoList).hasSize(databaseSizeBeforeCreate + 1);
         ToDo testToDo = toDoList.get(toDoList.size() - 1);
+        assertThat(testToDo.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testToDo.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testToDo.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testToDo.getState()).isEqualTo(DEFAULT_STATE);
@@ -162,6 +176,7 @@ class ToDoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(toDo.getId().intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
@@ -180,6 +195,7 @@ class ToDoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(toDo.getId().intValue()))
+            .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
@@ -205,7 +221,12 @@ class ToDoResourceIT {
         ToDo updatedToDo = toDoRepository.findById(toDo.getId()).get();
         // Disconnect from session so that the updates on updatedToDo are not directly saved in db
         em.detach(updatedToDo);
-        updatedToDo.date(UPDATED_DATE).description(UPDATED_DESCRIPTION).state(UPDATED_STATE).link(UPDATED_LINK);
+        updatedToDo
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .date(UPDATED_DATE)
+            .description(UPDATED_DESCRIPTION)
+            .state(UPDATED_STATE)
+            .link(UPDATED_LINK);
         ToDoDTO toDoDTO = toDoMapper.toDto(updatedToDo);
 
         restToDoMockMvc
@@ -220,6 +241,7 @@ class ToDoResourceIT {
         List<ToDo> toDoList = toDoRepository.findAll();
         assertThat(toDoList).hasSize(databaseSizeBeforeUpdate);
         ToDo testToDo = toDoList.get(toDoList.size() - 1);
+        assertThat(testToDo.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testToDo.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testToDo.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testToDo.getState()).isEqualTo(UPDATED_STATE);
@@ -303,7 +325,7 @@ class ToDoResourceIT {
         ToDo partialUpdatedToDo = new ToDo();
         partialUpdatedToDo.setId(toDo.getId());
 
-        partialUpdatedToDo.state(UPDATED_STATE).link(UPDATED_LINK);
+        partialUpdatedToDo.description(UPDATED_DESCRIPTION).state(UPDATED_STATE);
 
         restToDoMockMvc
             .perform(
@@ -317,10 +339,11 @@ class ToDoResourceIT {
         List<ToDo> toDoList = toDoRepository.findAll();
         assertThat(toDoList).hasSize(databaseSizeBeforeUpdate);
         ToDo testToDo = toDoList.get(toDoList.size() - 1);
+        assertThat(testToDo.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testToDo.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testToDo.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testToDo.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testToDo.getState()).isEqualTo(UPDATED_STATE);
-        assertThat(testToDo.getLink()).isEqualTo(UPDATED_LINK);
+        assertThat(testToDo.getLink()).isEqualTo(DEFAULT_LINK);
     }
 
     @Test
@@ -335,7 +358,12 @@ class ToDoResourceIT {
         ToDo partialUpdatedToDo = new ToDo();
         partialUpdatedToDo.setId(toDo.getId());
 
-        partialUpdatedToDo.date(UPDATED_DATE).description(UPDATED_DESCRIPTION).state(UPDATED_STATE).link(UPDATED_LINK);
+        partialUpdatedToDo
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .date(UPDATED_DATE)
+            .description(UPDATED_DESCRIPTION)
+            .state(UPDATED_STATE)
+            .link(UPDATED_LINK);
 
         restToDoMockMvc
             .perform(
@@ -349,6 +377,7 @@ class ToDoResourceIT {
         List<ToDo> toDoList = toDoRepository.findAll();
         assertThat(toDoList).hasSize(databaseSizeBeforeUpdate);
         ToDo testToDo = toDoList.get(toDoList.size() - 1);
+        assertThat(testToDo.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testToDo.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testToDo.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testToDo.getState()).isEqualTo(UPDATED_STATE);

@@ -6,6 +6,7 @@ import { IJob } from 'app/shared/model/job.model';
 
 export interface IEmployee {
   id?: number;
+  jobId?: number | null;
   user?: string;
   firstName?: string;
   lastName?: string;

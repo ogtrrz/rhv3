@@ -25,6 +25,9 @@ public class ToDo implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "employee_id")
+    private Long employeeId;
+
     @Column(name = "date")
     private Instant date;
 
@@ -57,6 +60,19 @@ public class ToDo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getEmployeeId() {
+        return this.employeeId;
+    }
+
+    public ToDo employeeId(Long employeeId) {
+        this.setEmployeeId(employeeId);
+        return this;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public Instant getDate() {
@@ -166,6 +182,7 @@ public class ToDo implements Serializable {
     public String toString() {
         return "ToDo{" +
             "id=" + getId() +
+            ", employeeId=" + getEmployeeId() +
             ", date='" + getDate() + "'" +
             ", description='" + getDescription() + "'" +
             ", state='" + getState() + "'" +

@@ -86,6 +86,7 @@ export const RequirentsUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="requirents-id" label="ID" validate={{ required: true }} /> : null}
+              <ValidatedField label="Course Id" id="requirents-courseId" name="courseId" data-cy="courseId" type="text" />
               <ValidatedField
                 label="Code"
                 id="requirents-code"

@@ -42,6 +42,9 @@ import wf.rh.service.mapper.CourseMapper;
 @WithMockUser
 class CourseResourceIT {
 
+    private static final Long DEFAULT_JOB_ID = 1L;
+    private static final Long UPDATED_JOB_ID = 2L;
+
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
@@ -100,6 +103,7 @@ class CourseResourceIT {
      */
     public static Course createEntity(EntityManager em) {
         Course course = new Course()
+            .jobId(DEFAULT_JOB_ID)
             .code(DEFAULT_CODE)
             .name(DEFAULT_NAME)
             .expirationInMonth(DEFAULT_EXPIRATION_IN_MONTH)
@@ -119,6 +123,7 @@ class CourseResourceIT {
      */
     public static Course createUpdatedEntity(EntityManager em) {
         Course course = new Course()
+            .jobId(UPDATED_JOB_ID)
             .code(UPDATED_CODE)
             .name(UPDATED_NAME)
             .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
@@ -149,6 +154,7 @@ class CourseResourceIT {
         List<Course> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeCreate + 1);
         Course testCourse = courseList.get(courseList.size() - 1);
+        assertThat(testCourse.getJobId()).isEqualTo(DEFAULT_JOB_ID);
         assertThat(testCourse.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testCourse.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCourse.getExpirationInMonth()).isEqualTo(DEFAULT_EXPIRATION_IN_MONTH);
@@ -226,6 +232,7 @@ class CourseResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(course.getId().intValue())))
+            .andExpect(jsonPath("$.[*].jobId").value(hasItem(DEFAULT_JOB_ID.intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].expirationInMonth").value(hasItem(DEFAULT_EXPIRATION_IN_MONTH)))
@@ -265,6 +272,7 @@ class CourseResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(course.getId().intValue()))
+            .andExpect(jsonPath("$.jobId").value(DEFAULT_JOB_ID.intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.expirationInMonth").value(DEFAULT_EXPIRATION_IN_MONTH))
@@ -295,6 +303,7 @@ class CourseResourceIT {
         // Disconnect from session so that the updates on updatedCourse are not directly saved in db
         em.detach(updatedCourse);
         updatedCourse
+            .jobId(UPDATED_JOB_ID)
             .code(UPDATED_CODE)
             .name(UPDATED_NAME)
             .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
@@ -317,6 +326,7 @@ class CourseResourceIT {
         List<Course> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
+        assertThat(testCourse.getJobId()).isEqualTo(UPDATED_JOB_ID);
         assertThat(testCourse.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testCourse.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testCourse.getExpirationInMonth()).isEqualTo(UPDATED_EXPIRATION_IN_MONTH);
@@ -405,10 +415,10 @@ class CourseResourceIT {
         partialUpdatedCourse.setId(course.getId());
 
         partialUpdatedCourse
-            .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
+            .name(UPDATED_NAME)
+            .typeCourse(UPDATED_TYPE_COURSE)
             .autorizationBy(UPDATED_AUTORIZATION_BY)
-            .durationAuthorizationInMonth(UPDATED_DURATION_AUTHORIZATION_IN_MONTH)
-            .link(UPDATED_LINK);
+            .description(UPDATED_DESCRIPTION);
 
         restCourseMockMvc
             .perform(
@@ -422,14 +432,15 @@ class CourseResourceIT {
         List<Course> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
+        assertThat(testCourse.getJobId()).isEqualTo(DEFAULT_JOB_ID);
         assertThat(testCourse.getCode()).isEqualTo(DEFAULT_CODE);
-        assertThat(testCourse.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCourse.getExpirationInMonth()).isEqualTo(UPDATED_EXPIRATION_IN_MONTH);
-        assertThat(testCourse.getTypeCourse()).isEqualTo(DEFAULT_TYPE_COURSE);
+        assertThat(testCourse.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testCourse.getExpirationInMonth()).isEqualTo(DEFAULT_EXPIRATION_IN_MONTH);
+        assertThat(testCourse.getTypeCourse()).isEqualTo(UPDATED_TYPE_COURSE);
         assertThat(testCourse.getAutorizationBy()).isEqualTo(UPDATED_AUTORIZATION_BY);
-        assertThat(testCourse.getDurationAuthorizationInMonth()).isEqualTo(UPDATED_DURATION_AUTHORIZATION_IN_MONTH);
-        assertThat(testCourse.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testCourse.getLink()).isEqualTo(UPDATED_LINK);
+        assertThat(testCourse.getDurationAuthorizationInMonth()).isEqualTo(DEFAULT_DURATION_AUTHORIZATION_IN_MONTH);
+        assertThat(testCourse.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testCourse.getLink()).isEqualTo(DEFAULT_LINK);
     }
 
     @Test
@@ -445,6 +456,7 @@ class CourseResourceIT {
         partialUpdatedCourse.setId(course.getId());
 
         partialUpdatedCourse
+            .jobId(UPDATED_JOB_ID)
             .code(UPDATED_CODE)
             .name(UPDATED_NAME)
             .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
@@ -466,6 +478,7 @@ class CourseResourceIT {
         List<Course> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
+        assertThat(testCourse.getJobId()).isEqualTo(UPDATED_JOB_ID);
         assertThat(testCourse.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testCourse.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testCourse.getExpirationInMonth()).isEqualTo(UPDATED_EXPIRATION_IN_MONTH);

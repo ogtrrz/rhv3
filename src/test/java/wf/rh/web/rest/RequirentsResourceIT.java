@@ -32,6 +32,9 @@ import wf.rh.service.mapper.RequirentsMapper;
 @WithMockUser
 class RequirentsResourceIT {
 
+    private static final Long DEFAULT_COURSE_ID = 1L;
+    private static final Long UPDATED_COURSE_ID = 2L;
+
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
@@ -72,6 +75,7 @@ class RequirentsResourceIT {
      */
     public static Requirents createEntity(EntityManager em) {
         Requirents requirents = new Requirents()
+            .courseId(DEFAULT_COURSE_ID)
             .code(DEFAULT_CODE)
             .expirationInMonth(DEFAULT_EXPIRATION_IN_MONTH)
             .kind(DEFAULT_KIND)
@@ -87,6 +91,7 @@ class RequirentsResourceIT {
      */
     public static Requirents createUpdatedEntity(EntityManager em) {
         Requirents requirents = new Requirents()
+            .courseId(UPDATED_COURSE_ID)
             .code(UPDATED_CODE)
             .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
             .kind(UPDATED_KIND)
@@ -113,6 +118,7 @@ class RequirentsResourceIT {
         List<Requirents> requirentsList = requirentsRepository.findAll();
         assertThat(requirentsList).hasSize(databaseSizeBeforeCreate + 1);
         Requirents testRequirents = requirentsList.get(requirentsList.size() - 1);
+        assertThat(testRequirents.getCourseId()).isEqualTo(DEFAULT_COURSE_ID);
         assertThat(testRequirents.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testRequirents.getExpirationInMonth()).isEqualTo(DEFAULT_EXPIRATION_IN_MONTH);
         assertThat(testRequirents.getKind()).isEqualTo(DEFAULT_KIND);
@@ -168,6 +174,7 @@ class RequirentsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(requirents.getId().intValue())))
+            .andExpect(jsonPath("$.[*].courseId").value(hasItem(DEFAULT_COURSE_ID.intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
             .andExpect(jsonPath("$.[*].expirationInMonth").value(hasItem(DEFAULT_EXPIRATION_IN_MONTH)))
             .andExpect(jsonPath("$.[*].kind").value(hasItem(DEFAULT_KIND.toString())))
@@ -186,6 +193,7 @@ class RequirentsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(requirents.getId().intValue()))
+            .andExpect(jsonPath("$.courseId").value(DEFAULT_COURSE_ID.intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
             .andExpect(jsonPath("$.expirationInMonth").value(DEFAULT_EXPIRATION_IN_MONTH))
             .andExpect(jsonPath("$.kind").value(DEFAULT_KIND.toString()))
@@ -212,6 +220,7 @@ class RequirentsResourceIT {
         // Disconnect from session so that the updates on updatedRequirents are not directly saved in db
         em.detach(updatedRequirents);
         updatedRequirents
+            .courseId(UPDATED_COURSE_ID)
             .code(UPDATED_CODE)
             .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
             .kind(UPDATED_KIND)
@@ -230,6 +239,7 @@ class RequirentsResourceIT {
         List<Requirents> requirentsList = requirentsRepository.findAll();
         assertThat(requirentsList).hasSize(databaseSizeBeforeUpdate);
         Requirents testRequirents = requirentsList.get(requirentsList.size() - 1);
+        assertThat(testRequirents.getCourseId()).isEqualTo(UPDATED_COURSE_ID);
         assertThat(testRequirents.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testRequirents.getExpirationInMonth()).isEqualTo(UPDATED_EXPIRATION_IN_MONTH);
         assertThat(testRequirents.getKind()).isEqualTo(UPDATED_KIND);
@@ -313,7 +323,11 @@ class RequirentsResourceIT {
         Requirents partialUpdatedRequirents = new Requirents();
         partialUpdatedRequirents.setId(requirents.getId());
 
-        partialUpdatedRequirents.code(UPDATED_CODE).kind(UPDATED_KIND).description(UPDATED_DESCRIPTION);
+        partialUpdatedRequirents
+            .courseId(UPDATED_COURSE_ID)
+            .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
+            .kind(UPDATED_KIND)
+            .description(UPDATED_DESCRIPTION);
 
         restRequirentsMockMvc
             .perform(
@@ -327,8 +341,9 @@ class RequirentsResourceIT {
         List<Requirents> requirentsList = requirentsRepository.findAll();
         assertThat(requirentsList).hasSize(databaseSizeBeforeUpdate);
         Requirents testRequirents = requirentsList.get(requirentsList.size() - 1);
-        assertThat(testRequirents.getCode()).isEqualTo(UPDATED_CODE);
-        assertThat(testRequirents.getExpirationInMonth()).isEqualTo(DEFAULT_EXPIRATION_IN_MONTH);
+        assertThat(testRequirents.getCourseId()).isEqualTo(UPDATED_COURSE_ID);
+        assertThat(testRequirents.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testRequirents.getExpirationInMonth()).isEqualTo(UPDATED_EXPIRATION_IN_MONTH);
         assertThat(testRequirents.getKind()).isEqualTo(UPDATED_KIND);
         assertThat(testRequirents.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
@@ -346,6 +361,7 @@ class RequirentsResourceIT {
         partialUpdatedRequirents.setId(requirents.getId());
 
         partialUpdatedRequirents
+            .courseId(UPDATED_COURSE_ID)
             .code(UPDATED_CODE)
             .expirationInMonth(UPDATED_EXPIRATION_IN_MONTH)
             .kind(UPDATED_KIND)
@@ -363,6 +379,7 @@ class RequirentsResourceIT {
         List<Requirents> requirentsList = requirentsRepository.findAll();
         assertThat(requirentsList).hasSize(databaseSizeBeforeUpdate);
         Requirents testRequirents = requirentsList.get(requirentsList.size() - 1);
+        assertThat(testRequirents.getCourseId()).isEqualTo(UPDATED_COURSE_ID);
         assertThat(testRequirents.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testRequirents.getExpirationInMonth()).isEqualTo(UPDATED_EXPIRATION_IN_MONTH);
         assertThat(testRequirents.getKind()).isEqualTo(UPDATED_KIND);

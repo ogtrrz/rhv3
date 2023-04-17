@@ -24,6 +24,9 @@ public class Employee implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "job_id")
+    private Long jobId;
+
     @NotNull
     @Size(max = 100)
     @Column(name = "jhi_user", length = 100, nullable = false)
@@ -122,6 +125,19 @@ public class Employee implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getJobId() {
+        return this.jobId;
+    }
+
+    public Employee jobId(Long jobId) {
+        this.setJobId(jobId);
+        return this;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
     }
 
     public String getUser() {
@@ -454,6 +470,7 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + getId() +
+            ", jobId=" + getJobId() +
             ", user='" + getUser() + "'" +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +

@@ -6,6 +6,14 @@
   "entityTableName": "training",
   "fields": [
     {
+      "fieldName": "courseId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "employeeId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "code",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength", "required"],

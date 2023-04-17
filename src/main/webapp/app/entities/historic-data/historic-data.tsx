@@ -103,6 +103,9 @@ export const HistoricData = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('employeeId')}>
+                  Employee Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('name')}>
                   Name <FontAwesomeIcon icon="sort" />
                 </th>
@@ -120,6 +123,7 @@ export const HistoricData = () => {
                       {historicData.id}
                     </Button>
                   </td>
+                  <td>{historicData.employeeId}</td>
                   <td>{historicData.name}</td>
                   <td>{historicData.link}</td>
                   <td className="text-end">

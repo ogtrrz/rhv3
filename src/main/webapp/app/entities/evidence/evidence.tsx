@@ -103,6 +103,12 @@ export const Evidence = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('trainingId')}>
+                  Training Id <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('requirentsId')}>
+                  Requirents Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('description')}>
                   Description <FontAwesomeIcon icon="sort" />
                 </th>
@@ -123,6 +129,8 @@ export const Evidence = () => {
                       {evidence.id}
                     </Button>
                   </td>
+                  <td>{evidence.trainingId}</td>
+                  <td>{evidence.requirentsId}</td>
                   <td>{evidence.description}</td>
                   <td>{evidence.expiration ? <TextFormat type="date" value={evidence.expiration} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{evidence.link}</td>

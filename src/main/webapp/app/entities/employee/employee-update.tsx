@@ -114,6 +114,7 @@ export const EmployeeUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="employee-id" label="ID" validate={{ required: true }} /> : null}
+              <ValidatedField label="Job Id" id="employee-jobId" name="jobId" data-cy="jobId" type="text" />
               <ValidatedField
                 label="User"
                 id="employee-user"

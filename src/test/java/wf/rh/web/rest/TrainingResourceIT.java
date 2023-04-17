@@ -43,6 +43,12 @@ import wf.rh.service.mapper.TrainingMapper;
 @WithMockUser
 class TrainingResourceIT {
 
+    private static final Long DEFAULT_COURSE_ID = 1L;
+    private static final Long UPDATED_COURSE_ID = 2L;
+
+    private static final Long DEFAULT_EMPLOYEE_ID = 1L;
+    private static final Long UPDATED_EMPLOYEE_ID = 2L;
+
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
@@ -85,7 +91,12 @@ class TrainingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Training createEntity(EntityManager em) {
-        Training training = new Training().code(DEFAULT_CODE).date(DEFAULT_DATE).expiry(DEFAULT_EXPIRY);
+        Training training = new Training()
+            .courseId(DEFAULT_COURSE_ID)
+            .employeeId(DEFAULT_EMPLOYEE_ID)
+            .code(DEFAULT_CODE)
+            .date(DEFAULT_DATE)
+            .expiry(DEFAULT_EXPIRY);
         return training;
     }
 
@@ -96,7 +107,12 @@ class TrainingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Training createUpdatedEntity(EntityManager em) {
-        Training training = new Training().code(UPDATED_CODE).date(UPDATED_DATE).expiry(UPDATED_EXPIRY);
+        Training training = new Training()
+            .courseId(UPDATED_COURSE_ID)
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .code(UPDATED_CODE)
+            .date(UPDATED_DATE)
+            .expiry(UPDATED_EXPIRY);
         return training;
     }
 
@@ -119,6 +135,8 @@ class TrainingResourceIT {
         List<Training> trainingList = trainingRepository.findAll();
         assertThat(trainingList).hasSize(databaseSizeBeforeCreate + 1);
         Training testTraining = trainingList.get(trainingList.size() - 1);
+        assertThat(testTraining.getCourseId()).isEqualTo(DEFAULT_COURSE_ID);
+        assertThat(testTraining.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testTraining.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testTraining.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testTraining.getExpiry()).isEqualTo(DEFAULT_EXPIRY);
@@ -173,6 +191,8 @@ class TrainingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(training.getId().intValue())))
+            .andExpect(jsonPath("$.[*].courseId").value(hasItem(DEFAULT_COURSE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].expiry").value(hasItem(DEFAULT_EXPIRY.toString())));
@@ -207,6 +227,8 @@ class TrainingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(training.getId().intValue()))
+            .andExpect(jsonPath("$.courseId").value(DEFAULT_COURSE_ID.intValue()))
+            .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.expiry").value(DEFAULT_EXPIRY.toString()));
@@ -231,7 +253,12 @@ class TrainingResourceIT {
         Training updatedTraining = trainingRepository.findById(training.getId()).get();
         // Disconnect from session so that the updates on updatedTraining are not directly saved in db
         em.detach(updatedTraining);
-        updatedTraining.code(UPDATED_CODE).date(UPDATED_DATE).expiry(UPDATED_EXPIRY);
+        updatedTraining
+            .courseId(UPDATED_COURSE_ID)
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .code(UPDATED_CODE)
+            .date(UPDATED_DATE)
+            .expiry(UPDATED_EXPIRY);
         TrainingDTO trainingDTO = trainingMapper.toDto(updatedTraining);
 
         restTrainingMockMvc
@@ -246,6 +273,8 @@ class TrainingResourceIT {
         List<Training> trainingList = trainingRepository.findAll();
         assertThat(trainingList).hasSize(databaseSizeBeforeUpdate);
         Training testTraining = trainingList.get(trainingList.size() - 1);
+        assertThat(testTraining.getCourseId()).isEqualTo(UPDATED_COURSE_ID);
+        assertThat(testTraining.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testTraining.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testTraining.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testTraining.getExpiry()).isEqualTo(UPDATED_EXPIRY);
@@ -328,7 +357,7 @@ class TrainingResourceIT {
         Training partialUpdatedTraining = new Training();
         partialUpdatedTraining.setId(training.getId());
 
-        partialUpdatedTraining.code(UPDATED_CODE).date(UPDATED_DATE);
+        partialUpdatedTraining.courseId(UPDATED_COURSE_ID).employeeId(UPDATED_EMPLOYEE_ID).date(UPDATED_DATE).expiry(UPDATED_EXPIRY);
 
         restTrainingMockMvc
             .perform(
@@ -342,9 +371,11 @@ class TrainingResourceIT {
         List<Training> trainingList = trainingRepository.findAll();
         assertThat(trainingList).hasSize(databaseSizeBeforeUpdate);
         Training testTraining = trainingList.get(trainingList.size() - 1);
-        assertThat(testTraining.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testTraining.getCourseId()).isEqualTo(UPDATED_COURSE_ID);
+        assertThat(testTraining.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
+        assertThat(testTraining.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testTraining.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testTraining.getExpiry()).isEqualTo(DEFAULT_EXPIRY);
+        assertThat(testTraining.getExpiry()).isEqualTo(UPDATED_EXPIRY);
     }
 
     @Test
@@ -359,7 +390,12 @@ class TrainingResourceIT {
         Training partialUpdatedTraining = new Training();
         partialUpdatedTraining.setId(training.getId());
 
-        partialUpdatedTraining.code(UPDATED_CODE).date(UPDATED_DATE).expiry(UPDATED_EXPIRY);
+        partialUpdatedTraining
+            .courseId(UPDATED_COURSE_ID)
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .code(UPDATED_CODE)
+            .date(UPDATED_DATE)
+            .expiry(UPDATED_EXPIRY);
 
         restTrainingMockMvc
             .perform(
@@ -373,6 +409,8 @@ class TrainingResourceIT {
         List<Training> trainingList = trainingRepository.findAll();
         assertThat(trainingList).hasSize(databaseSizeBeforeUpdate);
         Training testTraining = trainingList.get(trainingList.size() - 1);
+        assertThat(testTraining.getCourseId()).isEqualTo(UPDATED_COURSE_ID);
+        assertThat(testTraining.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testTraining.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testTraining.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testTraining.getExpiry()).isEqualTo(UPDATED_EXPIRY);

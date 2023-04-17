@@ -12,6 +12,8 @@ public class HistoricDataDTO implements Serializable {
 
     private Long id;
 
+    private Long employeeId;
+
     @NotNull
     @Size(max = 100)
     private String name;
@@ -24,6 +26,14 @@ public class HistoricDataDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getName() {
@@ -68,6 +78,7 @@ public class HistoricDataDTO implements Serializable {
     public String toString() {
         return "HistoricDataDTO{" +
             "id=" + getId() +
+            ", employeeId=" + getEmployeeId() +
             ", name='" + getName() + "'" +
             ", link='" + getLink() + "'" +
             "}";

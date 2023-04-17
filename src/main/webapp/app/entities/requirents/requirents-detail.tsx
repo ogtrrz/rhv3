@@ -29,6 +29,10 @@ export const RequirentsDetail = () => {
           </dt>
           <dd>{requirentsEntity.id}</dd>
           <dt>
+            <span id="courseId">Course Id</span>
+          </dt>
+          <dd>{requirentsEntity.courseId}</dd>
+          <dt>
             <span id="code">Code</span>
           </dt>
           <dd>{requirentsEntity.code}</dd>

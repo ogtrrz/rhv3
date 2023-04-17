@@ -6,6 +6,7 @@ entity Job {
 }
 
 entity Employee {
+	jobId Long,
 	user String maxlength(100) required,
 	firstName String maxlength(100) required,
 	lastName String maxlength(100) required,
@@ -21,6 +22,7 @@ entity Employee {
 }
 
 entity Course {
+	jobId Long,
 	code String maxlength(20) required,
     name String maxlength(100) required,
     expirationInMonth Integer,
@@ -32,6 +34,7 @@ entity Course {
 }
 //Modificado porque genera errores el nombre Requirements en la construccion del webapp
 entity Requirents {
+	courseId Long,
 	code String maxlength(20) required,
     expirationInMonth Integer,
     kind Kind,
@@ -39,6 +42,8 @@ entity Requirents {
 }
 
 entity Training {
+	courseId Long,
+    employeeId Long,
 	code String maxlength(20) required,
     date Instant,
 	expiry Instant
@@ -46,17 +51,21 @@ entity Training {
 }
 
 entity Evidence {
+	trainingId Long,
+    requirentsId Long,
 	description String maxlength(500) required,
     expiration Instant,
     link String// pattern(/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/)
 }
 
 entity HistoricData {
+	employeeId Long,
 	name String maxlength(100) required,
     link String// pattern(/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/)
 }
 
 entity ToDo {
+	employeeId Long,
 	date Instant,
     description String maxlength(100) required,
     state StateToDo, 

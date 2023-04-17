@@ -14,6 +14,9 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="job_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="jhi_user" type="varchar(100)">
                 <constraints nullable="false" />
             </column>
@@ -112,6 +115,7 @@
                   tableName="employee"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="job_id" type="numeric"/>
             <column name="jhi_user" type="string"/>
             <column name="first_name" type="string"/>
             <column name="last_name" type="string"/>

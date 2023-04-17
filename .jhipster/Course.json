@@ -6,6 +6,10 @@
   "entityTableName": "course",
   "fields": [
     {
+      "fieldName": "jobId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "code",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength", "required"],

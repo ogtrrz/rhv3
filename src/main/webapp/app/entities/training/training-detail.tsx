@@ -29,6 +29,14 @@ export const TrainingDetail = () => {
           </dt>
           <dd>{trainingEntity.id}</dd>
           <dt>
+            <span id="courseId">Course Id</span>
+          </dt>
+          <dd>{trainingEntity.courseId}</dd>
+          <dt>
+            <span id="employeeId">Employee Id</span>
+          </dt>
+          <dd>{trainingEntity.employeeId}</dd>
+          <dt>
             <span id="code">Code</span>
           </dt>
           <dd>{trainingEntity.code}</dd>

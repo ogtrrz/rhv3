@@ -85,6 +85,7 @@ export const HistoricDataUpdate = () => {
               {!isNew ? (
                 <ValidatedField name="id" required readOnly id="historic-data-id" label="ID" validate={{ required: true }} />
               ) : null}
+              <ValidatedField label="Employee Id" id="historic-data-employeeId" name="employeeId" data-cy="employeeId" type="text" />
               <ValidatedField
                 label="Name"
                 id="historic-data-name"

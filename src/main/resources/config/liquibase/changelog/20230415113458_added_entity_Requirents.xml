@@ -14,6 +14,9 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="course_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="code" type="varchar(20)">
                 <constraints nullable="false" />
             </column>
@@ -47,6 +50,7 @@
                   tableName="requirents"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="course_id" type="numeric"/>
             <column name="code" type="string"/>
             <column name="expiration_in_month" type="numeric"/>
             <column name="kind" type="string"/>

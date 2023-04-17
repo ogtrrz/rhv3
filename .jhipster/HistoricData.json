@@ -6,6 +6,10 @@
   "entityTableName": "historic_data",
   "fields": [
     {
+      "fieldName": "employeeId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength", "required"],

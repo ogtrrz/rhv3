@@ -4,6 +4,7 @@ import { StateToDo } from 'app/shared/model/enumerations/state-to-do.model';
 
 export interface IToDo {
   id?: number;
+  employeeId?: number | null;
   date?: string | null;
   description?: string;
   state?: StateToDo | null;
