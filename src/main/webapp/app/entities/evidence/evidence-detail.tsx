@@ -29,6 +29,14 @@ export const EvidenceDetail = () => {
           </dt>
           <dd>{evidenceEntity.id}</dd>
           <dt>
+            <span id="trainingId">Training Id</span>
+          </dt>
+          <dd>{evidenceEntity.trainingId}</dd>
+          <dt>
+            <span id="requirentsId">Requirents Id</span>
+          </dt>
+          <dd>{evidenceEntity.requirentsId}</dd>
+          <dt>
             <span id="description">Description</span>
           </dt>
           <dd>{evidenceEntity.description}</dd>

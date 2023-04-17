@@ -43,6 +43,9 @@ import wf.rh.service.mapper.EmployeeMapper;
 @WithMockUser
 class EmployeeResourceIT {
 
+    private static final Long DEFAULT_JOB_ID = 1L;
+    private static final Long UPDATED_JOB_ID = 2L;
+
     private static final String DEFAULT_USER = "AAAAAAAAAA";
     private static final String UPDATED_USER = "BBBBBBBBBB";
 
@@ -113,6 +116,7 @@ class EmployeeResourceIT {
      */
     public static Employee createEntity(EntityManager em) {
         Employee employee = new Employee()
+            .jobId(DEFAULT_JOB_ID)
             .user(DEFAULT_USER)
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
@@ -136,6 +140,7 @@ class EmployeeResourceIT {
      */
     public static Employee createUpdatedEntity(EntityManager em) {
         Employee employee = new Employee()
+            .jobId(UPDATED_JOB_ID)
             .user(UPDATED_USER)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
@@ -170,6 +175,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeCreate + 1);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getJobId()).isEqualTo(DEFAULT_JOB_ID);
         assertThat(testEmployee.getUser()).isEqualTo(DEFAULT_USER);
         assertThat(testEmployee.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
@@ -269,6 +275,7 @@ class EmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
+            .andExpect(jsonPath("$.[*].jobId").value(hasItem(DEFAULT_JOB_ID.intValue())))
             .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER)))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
@@ -312,6 +319,7 @@ class EmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
+            .andExpect(jsonPath("$.jobId").value(DEFAULT_JOB_ID.intValue()))
             .andExpect(jsonPath("$.user").value(DEFAULT_USER))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
@@ -346,6 +354,7 @@ class EmployeeResourceIT {
         // Disconnect from session so that the updates on updatedEmployee are not directly saved in db
         em.detach(updatedEmployee);
         updatedEmployee
+            .jobId(UPDATED_JOB_ID)
             .user(UPDATED_USER)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
@@ -372,6 +381,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getJobId()).isEqualTo(UPDATED_JOB_ID);
         assertThat(testEmployee.getUser()).isEqualTo(UPDATED_USER);
         assertThat(testEmployee.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(UPDATED_LAST_NAME);
@@ -464,12 +474,12 @@ class EmployeeResourceIT {
         partialUpdatedEmployee.setId(employee.getId());
 
         partialUpdatedEmployee
+            .user(UPDATED_USER)
             .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
+            .hireDate(UPDATED_HIRE_DATE)
             .emergencyContact(UPDATED_EMERGENCY_CONTACT)
             .emergencyPhone(UPDATED_EMERGENCY_PHONE)
-            .blodeType(UPDATED_BLODE_TYPE)
-            .allergies(UPDATED_ALLERGIES);
+            .blodeType(UPDATED_BLODE_TYPE);
 
         restEmployeeMockMvc
             .perform(
@@ -483,16 +493,17 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
-        assertThat(testEmployee.getUser()).isEqualTo(DEFAULT_USER);
+        assertThat(testEmployee.getJobId()).isEqualTo(DEFAULT_JOB_ID);
+        assertThat(testEmployee.getUser()).isEqualTo(UPDATED_USER);
         assertThat(testEmployee.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
-        assertThat(testEmployee.getLastName()).isEqualTo(UPDATED_LAST_NAME);
+        assertThat(testEmployee.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testEmployee.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testEmployee.getPhoneNumber()).isEqualTo(DEFAULT_PHONE_NUMBER);
-        assertThat(testEmployee.getHireDate()).isEqualTo(DEFAULT_HIRE_DATE);
+        assertThat(testEmployee.getHireDate()).isEqualTo(UPDATED_HIRE_DATE);
         assertThat(testEmployee.getEmergencyContact()).isEqualTo(UPDATED_EMERGENCY_CONTACT);
         assertThat(testEmployee.getEmergencyPhone()).isEqualTo(UPDATED_EMERGENCY_PHONE);
         assertThat(testEmployee.getBlodeType()).isEqualTo(UPDATED_BLODE_TYPE);
-        assertThat(testEmployee.getAllergies()).isEqualTo(UPDATED_ALLERGIES);
+        assertThat(testEmployee.getAllergies()).isEqualTo(DEFAULT_ALLERGIES);
         assertThat(testEmployee.getBirthDate()).isEqualTo(DEFAULT_BIRTH_DATE);
         assertThat(testEmployee.getNote()).isEqualTo(DEFAULT_NOTE);
     }
@@ -510,6 +521,7 @@ class EmployeeResourceIT {
         partialUpdatedEmployee.setId(employee.getId());
 
         partialUpdatedEmployee
+            .jobId(UPDATED_JOB_ID)
             .user(UPDATED_USER)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
@@ -535,6 +547,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getJobId()).isEqualTo(UPDATED_JOB_ID);
         assertThat(testEmployee.getUser()).isEqualTo(UPDATED_USER);
         assertThat(testEmployee.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(UPDATED_LAST_NAME);

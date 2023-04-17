@@ -24,6 +24,9 @@ public class Requirents implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "course_id")
+    private Long courseId;
+
     @NotNull
     @Size(max = 20)
     @Column(name = "code", length = 20, nullable = false)
@@ -56,6 +59,19 @@ public class Requirents implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCourseId() {
+        return this.courseId;
+    }
+
+    public Requirents courseId(Long courseId) {
+        this.setCourseId(courseId);
+        return this;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public String getCode() {
@@ -165,6 +181,7 @@ public class Requirents implements Serializable {
     public String toString() {
         return "Requirents{" +
             "id=" + getId() +
+            ", courseId=" + getCourseId() +
             ", code='" + getCode() + "'" +
             ", expirationInMonth=" + getExpirationInMonth() +
             ", kind='" + getKind() + "'" +

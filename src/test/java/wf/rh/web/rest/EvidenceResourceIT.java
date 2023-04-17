@@ -33,6 +33,12 @@ import wf.rh.service.mapper.EvidenceMapper;
 @WithMockUser
 class EvidenceResourceIT {
 
+    private static final Long DEFAULT_TRAINING_ID = 1L;
+    private static final Long UPDATED_TRAINING_ID = 2L;
+
+    private static final Long DEFAULT_REQUIRENTS_ID = 1L;
+    private static final Long UPDATED_REQUIRENTS_ID = 2L;
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
@@ -69,7 +75,12 @@ class EvidenceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Evidence createEntity(EntityManager em) {
-        Evidence evidence = new Evidence().description(DEFAULT_DESCRIPTION).expiration(DEFAULT_EXPIRATION).link(DEFAULT_LINK);
+        Evidence evidence = new Evidence()
+            .trainingId(DEFAULT_TRAINING_ID)
+            .requirentsId(DEFAULT_REQUIRENTS_ID)
+            .description(DEFAULT_DESCRIPTION)
+            .expiration(DEFAULT_EXPIRATION)
+            .link(DEFAULT_LINK);
         return evidence;
     }
 
@@ -80,7 +91,12 @@ class EvidenceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Evidence createUpdatedEntity(EntityManager em) {
-        Evidence evidence = new Evidence().description(UPDATED_DESCRIPTION).expiration(UPDATED_EXPIRATION).link(UPDATED_LINK);
+        Evidence evidence = new Evidence()
+            .trainingId(UPDATED_TRAINING_ID)
+            .requirentsId(UPDATED_REQUIRENTS_ID)
+            .description(UPDATED_DESCRIPTION)
+            .expiration(UPDATED_EXPIRATION)
+            .link(UPDATED_LINK);
         return evidence;
     }
 
@@ -103,6 +119,8 @@ class EvidenceResourceIT {
         List<Evidence> evidenceList = evidenceRepository.findAll();
         assertThat(evidenceList).hasSize(databaseSizeBeforeCreate + 1);
         Evidence testEvidence = evidenceList.get(evidenceList.size() - 1);
+        assertThat(testEvidence.getTrainingId()).isEqualTo(DEFAULT_TRAINING_ID);
+        assertThat(testEvidence.getRequirentsId()).isEqualTo(DEFAULT_REQUIRENTS_ID);
         assertThat(testEvidence.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testEvidence.getExpiration()).isEqualTo(DEFAULT_EXPIRATION);
         assertThat(testEvidence.getLink()).isEqualTo(DEFAULT_LINK);
@@ -157,6 +175,8 @@ class EvidenceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(evidence.getId().intValue())))
+            .andExpect(jsonPath("$.[*].trainingId").value(hasItem(DEFAULT_TRAINING_ID.intValue())))
+            .andExpect(jsonPath("$.[*].requirentsId").value(hasItem(DEFAULT_REQUIRENTS_ID.intValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].expiration").value(hasItem(DEFAULT_EXPIRATION.toString())))
             .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK)));
@@ -174,6 +194,8 @@ class EvidenceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(evidence.getId().intValue()))
+            .andExpect(jsonPath("$.trainingId").value(DEFAULT_TRAINING_ID.intValue()))
+            .andExpect(jsonPath("$.requirentsId").value(DEFAULT_REQUIRENTS_ID.intValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.expiration").value(DEFAULT_EXPIRATION.toString()))
             .andExpect(jsonPath("$.link").value(DEFAULT_LINK));
@@ -198,7 +220,12 @@ class EvidenceResourceIT {
         Evidence updatedEvidence = evidenceRepository.findById(evidence.getId()).get();
         // Disconnect from session so that the updates on updatedEvidence are not directly saved in db
         em.detach(updatedEvidence);
-        updatedEvidence.description(UPDATED_DESCRIPTION).expiration(UPDATED_EXPIRATION).link(UPDATED_LINK);
+        updatedEvidence
+            .trainingId(UPDATED_TRAINING_ID)
+            .requirentsId(UPDATED_REQUIRENTS_ID)
+            .description(UPDATED_DESCRIPTION)
+            .expiration(UPDATED_EXPIRATION)
+            .link(UPDATED_LINK);
         EvidenceDTO evidenceDTO = evidenceMapper.toDto(updatedEvidence);
 
         restEvidenceMockMvc
@@ -213,6 +240,8 @@ class EvidenceResourceIT {
         List<Evidence> evidenceList = evidenceRepository.findAll();
         assertThat(evidenceList).hasSize(databaseSizeBeforeUpdate);
         Evidence testEvidence = evidenceList.get(evidenceList.size() - 1);
+        assertThat(testEvidence.getTrainingId()).isEqualTo(UPDATED_TRAINING_ID);
+        assertThat(testEvidence.getRequirentsId()).isEqualTo(UPDATED_REQUIRENTS_ID);
         assertThat(testEvidence.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testEvidence.getExpiration()).isEqualTo(UPDATED_EXPIRATION);
         assertThat(testEvidence.getLink()).isEqualTo(UPDATED_LINK);
@@ -295,7 +324,7 @@ class EvidenceResourceIT {
         Evidence partialUpdatedEvidence = new Evidence();
         partialUpdatedEvidence.setId(evidence.getId());
 
-        partialUpdatedEvidence.expiration(UPDATED_EXPIRATION).link(UPDATED_LINK);
+        partialUpdatedEvidence.requirentsId(UPDATED_REQUIRENTS_ID).description(UPDATED_DESCRIPTION);
 
         restEvidenceMockMvc
             .perform(
@@ -309,9 +338,11 @@ class EvidenceResourceIT {
         List<Evidence> evidenceList = evidenceRepository.findAll();
         assertThat(evidenceList).hasSize(databaseSizeBeforeUpdate);
         Evidence testEvidence = evidenceList.get(evidenceList.size() - 1);
-        assertThat(testEvidence.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testEvidence.getExpiration()).isEqualTo(UPDATED_EXPIRATION);
-        assertThat(testEvidence.getLink()).isEqualTo(UPDATED_LINK);
+        assertThat(testEvidence.getTrainingId()).isEqualTo(DEFAULT_TRAINING_ID);
+        assertThat(testEvidence.getRequirentsId()).isEqualTo(UPDATED_REQUIRENTS_ID);
+        assertThat(testEvidence.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testEvidence.getExpiration()).isEqualTo(DEFAULT_EXPIRATION);
+        assertThat(testEvidence.getLink()).isEqualTo(DEFAULT_LINK);
     }
 
     @Test
@@ -326,7 +357,12 @@ class EvidenceResourceIT {
         Evidence partialUpdatedEvidence = new Evidence();
         partialUpdatedEvidence.setId(evidence.getId());
 
-        partialUpdatedEvidence.description(UPDATED_DESCRIPTION).expiration(UPDATED_EXPIRATION).link(UPDATED_LINK);
+        partialUpdatedEvidence
+            .trainingId(UPDATED_TRAINING_ID)
+            .requirentsId(UPDATED_REQUIRENTS_ID)
+            .description(UPDATED_DESCRIPTION)
+            .expiration(UPDATED_EXPIRATION)
+            .link(UPDATED_LINK);
 
         restEvidenceMockMvc
             .perform(
@@ -340,6 +376,8 @@ class EvidenceResourceIT {
         List<Evidence> evidenceList = evidenceRepository.findAll();
         assertThat(evidenceList).hasSize(databaseSizeBeforeUpdate);
         Evidence testEvidence = evidenceList.get(evidenceList.size() - 1);
+        assertThat(testEvidence.getTrainingId()).isEqualTo(UPDATED_TRAINING_ID);
+        assertThat(testEvidence.getRequirentsId()).isEqualTo(UPDATED_REQUIRENTS_ID);
         assertThat(testEvidence.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testEvidence.getExpiration()).isEqualTo(UPDATED_EXPIRATION);
         assertThat(testEvidence.getLink()).isEqualTo(UPDATED_LINK);

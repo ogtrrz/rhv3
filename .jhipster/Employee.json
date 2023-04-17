@@ -6,6 +6,10 @@
   "entityTableName": "employee",
   "fields": [
     {
+      "fieldName": "jobId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "user",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength", "required"],

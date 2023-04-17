@@ -6,6 +6,10 @@
   "entityTableName": "requirents",
   "fields": [
     {
+      "fieldName": "courseId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "code",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength", "required"],

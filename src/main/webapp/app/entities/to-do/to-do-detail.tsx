@@ -29,6 +29,10 @@ export const ToDoDetail = () => {
           </dt>
           <dd>{toDoEntity.id}</dd>
           <dt>
+            <span id="employeeId">Employee Id</span>
+          </dt>
+          <dd>{toDoEntity.employeeId}</dd>
+          <dt>
             <span id="date">Date</span>
           </dt>
           <dd>{toDoEntity.date ? <TextFormat value={toDoEntity.date} type="date" format={APP_DATE_FORMAT} /> : null}</dd>

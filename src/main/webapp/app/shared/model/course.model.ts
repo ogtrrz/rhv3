@@ -5,6 +5,7 @@ import { TypeCourse } from 'app/shared/model/enumerations/type-course.model';
 
 export interface ICourse {
   id?: number;
+  jobId?: number | null;
   code?: string;
   name?: string;
   expirationInMonth?: number | null;

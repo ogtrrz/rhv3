@@ -91,6 +91,7 @@ export const ToDoUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="to-do-id" label="ID" validate={{ required: true }} /> : null}
+              <ValidatedField label="Employee Id" id="to-do-employeeId" name="employeeId" data-cy="employeeId" type="text" />
               <ValidatedField
                 label="Date"
                 id="to-do-date"

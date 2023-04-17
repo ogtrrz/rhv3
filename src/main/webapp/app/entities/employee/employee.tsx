@@ -103,6 +103,9 @@ export const Employee = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('jobId')}>
+                  Job Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('user')}>
                   User <FontAwesomeIcon icon="sort" />
                 </th>
@@ -153,6 +156,7 @@ export const Employee = () => {
                       {employee.id}
                     </Button>
                   </td>
+                  <td>{employee.jobId}</td>
                   <td>{employee.user}</td>
                   <td>{employee.firstName}</td>
                   <td>{employee.lastName}</td>

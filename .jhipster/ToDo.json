@@ -6,6 +6,10 @@
   "entityTableName": "to_do",
   "fields": [
     {
+      "fieldName": "employeeId",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "date",
       "fieldType": "Instant"
     },

@@ -23,6 +23,9 @@ public class HistoricData implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "employee_id")
+    private Long employeeId;
+
     @NotNull
     @Size(max = 100)
     @Column(name = "name", length = 100, nullable = false)
@@ -48,6 +51,19 @@ public class HistoricData implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getEmployeeId() {
+        return this.employeeId;
+    }
+
+    public HistoricData employeeId(Long employeeId) {
+        this.setEmployeeId(employeeId);
+        return this;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getName() {
@@ -131,6 +147,7 @@ public class HistoricData implements Serializable {
     public String toString() {
         return "HistoricData{" +
             "id=" + getId() +
+            ", employeeId=" + getEmployeeId() +
             ", name='" + getName() + "'" +
             ", link='" + getLink() + "'" +
             "}";

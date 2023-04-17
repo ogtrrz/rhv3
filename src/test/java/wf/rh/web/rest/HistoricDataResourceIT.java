@@ -31,6 +31,9 @@ import wf.rh.service.mapper.HistoricDataMapper;
 @WithMockUser
 class HistoricDataResourceIT {
 
+    private static final Long DEFAULT_EMPLOYEE_ID = 1L;
+    private static final Long UPDATED_EMPLOYEE_ID = 2L;
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -64,7 +67,7 @@ class HistoricDataResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HistoricData createEntity(EntityManager em) {
-        HistoricData historicData = new HistoricData().name(DEFAULT_NAME).link(DEFAULT_LINK);
+        HistoricData historicData = new HistoricData().employeeId(DEFAULT_EMPLOYEE_ID).name(DEFAULT_NAME).link(DEFAULT_LINK);
         return historicData;
     }
 
@@ -75,7 +78,7 @@ class HistoricDataResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HistoricData createUpdatedEntity(EntityManager em) {
-        HistoricData historicData = new HistoricData().name(UPDATED_NAME).link(UPDATED_LINK);
+        HistoricData historicData = new HistoricData().employeeId(UPDATED_EMPLOYEE_ID).name(UPDATED_NAME).link(UPDATED_LINK);
         return historicData;
     }
 
@@ -100,6 +103,7 @@ class HistoricDataResourceIT {
         List<HistoricData> historicDataList = historicDataRepository.findAll();
         assertThat(historicDataList).hasSize(databaseSizeBeforeCreate + 1);
         HistoricData testHistoricData = historicDataList.get(historicDataList.size() - 1);
+        assertThat(testHistoricData.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testHistoricData.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testHistoricData.getLink()).isEqualTo(DEFAULT_LINK);
     }
@@ -157,6 +161,7 @@ class HistoricDataResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(historicData.getId().intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK)));
     }
@@ -173,6 +178,7 @@ class HistoricDataResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(historicData.getId().intValue()))
+            .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.link").value(DEFAULT_LINK));
     }
@@ -196,7 +202,7 @@ class HistoricDataResourceIT {
         HistoricData updatedHistoricData = historicDataRepository.findById(historicData.getId()).get();
         // Disconnect from session so that the updates on updatedHistoricData are not directly saved in db
         em.detach(updatedHistoricData);
-        updatedHistoricData.name(UPDATED_NAME).link(UPDATED_LINK);
+        updatedHistoricData.employeeId(UPDATED_EMPLOYEE_ID).name(UPDATED_NAME).link(UPDATED_LINK);
         HistoricDataDTO historicDataDTO = historicDataMapper.toDto(updatedHistoricData);
 
         restHistoricDataMockMvc
@@ -211,6 +217,7 @@ class HistoricDataResourceIT {
         List<HistoricData> historicDataList = historicDataRepository.findAll();
         assertThat(historicDataList).hasSize(databaseSizeBeforeUpdate);
         HistoricData testHistoricData = historicDataList.get(historicDataList.size() - 1);
+        assertThat(testHistoricData.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testHistoricData.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testHistoricData.getLink()).isEqualTo(UPDATED_LINK);
     }
@@ -294,6 +301,8 @@ class HistoricDataResourceIT {
         HistoricData partialUpdatedHistoricData = new HistoricData();
         partialUpdatedHistoricData.setId(historicData.getId());
 
+        partialUpdatedHistoricData.link(UPDATED_LINK);
+
         restHistoricDataMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHistoricData.getId())
@@ -306,8 +315,9 @@ class HistoricDataResourceIT {
         List<HistoricData> historicDataList = historicDataRepository.findAll();
         assertThat(historicDataList).hasSize(databaseSizeBeforeUpdate);
         HistoricData testHistoricData = historicDataList.get(historicDataList.size() - 1);
+        assertThat(testHistoricData.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testHistoricData.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testHistoricData.getLink()).isEqualTo(DEFAULT_LINK);
+        assertThat(testHistoricData.getLink()).isEqualTo(UPDATED_LINK);
     }
 
     @Test
@@ -322,7 +332,7 @@ class HistoricDataResourceIT {
         HistoricData partialUpdatedHistoricData = new HistoricData();
         partialUpdatedHistoricData.setId(historicData.getId());
 
-        partialUpdatedHistoricData.name(UPDATED_NAME).link(UPDATED_LINK);
+        partialUpdatedHistoricData.employeeId(UPDATED_EMPLOYEE_ID).name(UPDATED_NAME).link(UPDATED_LINK);
 
         restHistoricDataMockMvc
             .perform(
@@ -336,6 +346,7 @@ class HistoricDataResourceIT {
         List<HistoricData> historicDataList = historicDataRepository.findAll();
         assertThat(historicDataList).hasSize(databaseSizeBeforeUpdate);
         HistoricData testHistoricData = historicDataList.get(historicDataList.size() - 1);
+        assertThat(testHistoricData.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testHistoricData.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testHistoricData.getLink()).isEqualTo(UPDATED_LINK);
     }

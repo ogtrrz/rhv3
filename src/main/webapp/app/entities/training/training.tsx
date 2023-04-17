@@ -103,6 +103,12 @@ export const Training = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('courseId')}>
+                  Course Id <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('employeeId')}>
+                  Employee Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('code')}>
                   Code <FontAwesomeIcon icon="sort" />
                 </th>
@@ -123,6 +129,8 @@ export const Training = () => {
                       {training.id}
                     </Button>
                   </td>
+                  <td>{training.courseId}</td>
+                  <td>{training.employeeId}</td>
                   <td>{training.code}</td>
                   <td>{training.date ? <TextFormat type="date" value={training.date} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{training.expiry ? <TextFormat type="date" value={training.expiry} format={APP_DATE_FORMAT} /> : null}</td>

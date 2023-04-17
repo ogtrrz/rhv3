@@ -15,6 +15,10 @@ public class TrainingDTO implements Serializable {
 
     private Long id;
 
+    private Long courseId;
+
+    private Long employeeId;
+
     @NotNull
     @Size(max = 20)
     private String code;
@@ -31,6 +35,22 @@ public class TrainingDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getCode() {
@@ -91,6 +111,8 @@ public class TrainingDTO implements Serializable {
     public String toString() {
         return "TrainingDTO{" +
             "id=" + getId() +
+            ", courseId=" + getCourseId() +
+            ", employeeId=" + getEmployeeId() +
             ", code='" + getCode() + "'" +
             ", date='" + getDate() + "'" +
             ", expiry='" + getExpiry() + "'" +

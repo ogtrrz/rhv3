@@ -5,6 +5,8 @@ import { IEmployee } from 'app/shared/model/employee.model';
 
 export interface ITraining {
   id?: number;
+  courseId?: number | null;
+  employeeId?: number | null;
   code?: string;
   date?: string | null;
   expiry?: string | null;

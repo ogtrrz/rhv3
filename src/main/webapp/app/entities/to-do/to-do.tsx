@@ -103,6 +103,9 @@ export const ToDo = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('employeeId')}>
+                  Employee Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('date')}>
                   Date <FontAwesomeIcon icon="sort" />
                 </th>
@@ -126,6 +129,7 @@ export const ToDo = () => {
                       {toDo.id}
                     </Button>
                   </td>
+                  <td>{toDo.employeeId}</td>
                   <td>{toDo.date ? <TextFormat type="date" value={toDo.date} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{toDo.description}</td>
                   <td>{toDo.state}</td>

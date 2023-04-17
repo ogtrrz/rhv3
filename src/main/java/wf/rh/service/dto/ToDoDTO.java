@@ -14,6 +14,8 @@ public class ToDoDTO implements Serializable {
 
     private Long id;
 
+    private Long employeeId;
+
     private Instant date;
 
     @NotNull
@@ -30,6 +32,14 @@ public class ToDoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public Instant getDate() {
@@ -90,6 +100,7 @@ public class ToDoDTO implements Serializable {
     public String toString() {
         return "ToDoDTO{" +
             "id=" + getId() +
+            ", employeeId=" + getEmployeeId() +
             ", date='" + getDate() + "'" +
             ", description='" + getDescription() + "'" +
             ", state='" + getState() + "'" +

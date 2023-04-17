@@ -29,6 +29,10 @@ export const CourseDetail = () => {
           </dt>
           <dd>{courseEntity.id}</dd>
           <dt>
+            <span id="jobId">Job Id</span>
+          </dt>
+          <dd>{courseEntity.jobId}</dd>
+          <dt>
             <span id="code">Code</span>
           </dt>
           <dd>{courseEntity.code}</dd>

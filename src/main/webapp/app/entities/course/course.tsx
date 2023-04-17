@@ -103,6 +103,9 @@ export const Course = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('jobId')}>
+                  Job Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('code')}>
                   Code <FontAwesomeIcon icon="sort" />
                 </th>
@@ -141,6 +144,7 @@ export const Course = () => {
                       {course.id}
                     </Button>
                   </td>
+                  <td>{course.jobId}</td>
                   <td>{course.code}</td>
                   <td>{course.name}</td>
                   <td>{course.expirationInMonth}</td>

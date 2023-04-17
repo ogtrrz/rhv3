@@ -29,6 +29,10 @@ export const HistoricDataDetail = () => {
           </dt>
           <dd>{historicDataEntity.id}</dd>
           <dt>
+            <span id="employeeId">Employee Id</span>
+          </dt>
+          <dd>{historicDataEntity.employeeId}</dd>
+          <dt>
             <span id="name">Name</span>
           </dt>
           <dd>{historicDataEntity.name}</dd>

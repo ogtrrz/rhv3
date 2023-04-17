@@ -24,6 +24,12 @@ public class Evidence implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "training_id")
+    private Long trainingId;
+
+    @Column(name = "requirents_id")
+    private Long requirentsId;
+
     @NotNull
     @Size(max = 500)
     @Column(name = "description", length = 500, nullable = false)
@@ -52,6 +58,32 @@ public class Evidence implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTrainingId() {
+        return this.trainingId;
+    }
+
+    public Evidence trainingId(Long trainingId) {
+        this.setTrainingId(trainingId);
+        return this;
+    }
+
+    public void setTrainingId(Long trainingId) {
+        this.trainingId = trainingId;
+    }
+
+    public Long getRequirentsId() {
+        return this.requirentsId;
+    }
+
+    public Evidence requirentsId(Long requirentsId) {
+        this.setRequirentsId(requirentsId);
+        return this;
+    }
+
+    public void setRequirentsId(Long requirentsId) {
+        this.requirentsId = requirentsId;
     }
 
     public String getDescription() {
@@ -148,6 +180,8 @@ public class Evidence implements Serializable {
     public String toString() {
         return "Evidence{" +
             "id=" + getId() +
+            ", trainingId=" + getTrainingId() +
+            ", requirentsId=" + getRequirentsId() +
             ", description='" + getDescription() + "'" +
             ", expiration='" + getExpiration() + "'" +
             ", link='" + getLink() + "'" +

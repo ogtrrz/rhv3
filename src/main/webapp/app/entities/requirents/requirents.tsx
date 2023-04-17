@@ -103,6 +103,9 @@ export const Requirents = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('courseId')}>
+                  Course Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('code')}>
                   Code <FontAwesomeIcon icon="sort" />
                 </th>
@@ -126,6 +129,7 @@ export const Requirents = () => {
                       {requirents.id}
                     </Button>
                   </td>
+                  <td>{requirents.courseId}</td>
                   <td>{requirents.code}</td>
                   <td>{requirents.expirationInMonth}</td>
                   <td>{requirents.kind}</td>

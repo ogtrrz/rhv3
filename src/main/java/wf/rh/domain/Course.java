@@ -24,6 +24,9 @@ public class Course implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "job_id")
+    private Long jobId;
+
     @NotNull
     @Size(max = 20)
     @Column(name = "code", length = 20, nullable = false)
@@ -98,6 +101,19 @@ public class Course implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getJobId() {
+        return this.jobId;
+    }
+
+    public Course jobId(Long jobId) {
+        this.setJobId(jobId);
+        return this;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
     }
 
     public String getCode() {
@@ -353,6 +369,7 @@ public class Course implements Serializable {
     public String toString() {
         return "Course{" +
             "id=" + getId() +
+            ", jobId=" + getJobId() +
             ", code='" + getCode() + "'" +
             ", name='" + getName() + "'" +
             ", expirationInMonth=" + getExpirationInMonth() +
