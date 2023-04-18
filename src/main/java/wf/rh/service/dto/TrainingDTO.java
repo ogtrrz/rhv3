@@ -2,9 +2,7 @@ package wf.rh.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -27,7 +25,9 @@ public class TrainingDTO implements Serializable {
 
     private Instant expiry;
 
-    private Set<EvidenceDTO> evidences = new HashSet<>();
+    private CourseDTO course;
+
+    private EmployeeDTO employee;
 
     public Long getId() {
         return id;
@@ -77,12 +77,20 @@ public class TrainingDTO implements Serializable {
         this.expiry = expiry;
     }
 
-    public Set<EvidenceDTO> getEvidences() {
-        return evidences;
+    public CourseDTO getCourse() {
+        return course;
     }
 
-    public void setEvidences(Set<EvidenceDTO> evidences) {
-        this.evidences = evidences;
+    public void setCourse(CourseDTO course) {
+        this.course = course;
+    }
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
     @Override
@@ -116,7 +124,8 @@ public class TrainingDTO implements Serializable {
             ", code='" + getCode() + "'" +
             ", date='" + getDate() + "'" +
             ", expiry='" + getExpiry() + "'" +
-            ", evidences=" + getEvidences() +
+            ", course=" + getCourse() +
+            ", employee=" + getEmployee() +
             "}";
     }
 }

@@ -8,7 +8,7 @@ export interface IEvidence {
   description?: string;
   expiration?: string | null;
   link?: string | null;
-  trainings?: ITraining[] | null;
+  training?: ITraining | null;
 }
 
 export const defaultValue: Readonly<IEvidence> = {};

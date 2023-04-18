@@ -53,6 +53,9 @@
             <column name="note" type="varchar(2000)">
                 <constraints nullable="true" />
             </column>
+            <column name="job_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="employee_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -60,42 +63,6 @@
         </createTable>
         <dropDefaultValue tableName="employee" columnName="hire_date" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="employee" columnName="birth_date" columnDataType="${datetimeType}"/>
-    </changeSet>
-
-    <changeSet id="20230415113456-1-relations" author="jhipster">
-
-        <createTable tableName="rel_employee__training">
-            <column name="training_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="employee_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="employee_id, training_id" tableName="rel_employee__training"/>
-
-        <createTable tableName="rel_employee__todo">
-            <column name="todo_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="employee_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="employee_id, todo_id" tableName="rel_employee__todo"/>
-
-        <createTable tableName="rel_employee__historic_data">
-            <column name="historic_data_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="employee_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="employee_id, historic_data_id" tableName="rel_employee__historic_data"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

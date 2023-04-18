@@ -143,6 +143,9 @@ export const Employee = () => {
                   Note <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  Job <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   Employee <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -169,6 +172,7 @@ export const Employee = () => {
                   <td>{employee.allergies}</td>
                   <td>{employee.birthDate ? <TextFormat type="date" value={employee.birthDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{employee.note}</td>
+                  <td>{employee.job ? <Link to={`/job/${employee.job.id}`}>{employee.job.id}</Link> : ''}</td>
                   <td>{employee.employee ? <Link to={`/employee/${employee.employee.id}`}>{employee.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

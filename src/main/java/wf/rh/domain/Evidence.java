@@ -3,8 +3,6 @@ package wf.rh.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -41,9 +39,9 @@ public class Evidence implements Serializable {
     @Column(name = "link")
     private String link;
 
-    @ManyToMany(mappedBy = "evidences")
-    @JsonIgnoreProperties(value = { "evidences", "courses", "employees" }, allowSetters = true)
-    private Set<Training> trainings = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "evidences", "course", "employee" }, allowSetters = true)
+    private Training training;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,34 +123,16 @@ public class Evidence implements Serializable {
         this.link = link;
     }
 
-    public Set<Training> getTrainings() {
-        return this.trainings;
+    public Training getTraining() {
+        return this.training;
     }
 
-    public void setTrainings(Set<Training> trainings) {
-        if (this.trainings != null) {
-            this.trainings.forEach(i -> i.removeEvidence(this));
-        }
-        if (trainings != null) {
-            trainings.forEach(i -> i.addEvidence(this));
-        }
-        this.trainings = trainings;
+    public void setTraining(Training training) {
+        this.training = training;
     }
 
-    public Evidence trainings(Set<Training> trainings) {
-        this.setTrainings(trainings);
-        return this;
-    }
-
-    public Evidence addTraining(Training training) {
-        this.trainings.add(training);
-        training.getEvidences().add(this);
-        return this;
-    }
-
-    public Evidence removeTraining(Training training) {
-        this.trainings.remove(training);
-        training.getEvidences().remove(this);
+    public Evidence training(Training training) {
+        this.setTraining(training);
         return this;
     }
 

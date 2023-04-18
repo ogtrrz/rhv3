@@ -89,15 +89,6 @@ public class CourseService {
     }
 
     /**
-     * Get all the courses with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<CourseDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return courseRepository.findAllWithEagerRelationships(pageable).map(courseMapper::toDto);
-    }
-
-    /**
      * Get one course by id.
      *
      * @param id the id of the entity.
@@ -106,7 +97,7 @@ public class CourseService {
     @Transactional(readOnly = true)
     public Optional<CourseDTO> findOne(Long id) {
         log.debug("Request to get Course : {}", id);
-        return courseRepository.findOneWithEagerRelationships(id).map(courseMapper::toDto);
+        return courseRepository.findById(id).map(courseMapper::toDto);
     }
 
     /**

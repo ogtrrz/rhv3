@@ -2,9 +2,7 @@ package wf.rh.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -51,11 +49,7 @@ public class EmployeeDTO implements Serializable {
     @Size(max = 2000)
     private String note;
 
-    private Set<TrainingDTO> trainings = new HashSet<>();
-
-    private Set<ToDoDTO> todos = new HashSet<>();
-
-    private Set<HistoricDataDTO> historicData = new HashSet<>();
+    private JobDTO job;
 
     private EmployeeDTO employee;
 
@@ -171,28 +165,12 @@ public class EmployeeDTO implements Serializable {
         this.note = note;
     }
 
-    public Set<TrainingDTO> getTrainings() {
-        return trainings;
+    public JobDTO getJob() {
+        return job;
     }
 
-    public void setTrainings(Set<TrainingDTO> trainings) {
-        this.trainings = trainings;
-    }
-
-    public Set<ToDoDTO> getTodos() {
-        return todos;
-    }
-
-    public void setTodos(Set<ToDoDTO> todos) {
-        this.todos = todos;
-    }
-
-    public Set<HistoricDataDTO> getHistoricData() {
-        return historicData;
-    }
-
-    public void setHistoricData(Set<HistoricDataDTO> historicData) {
-        this.historicData = historicData;
+    public void setJob(JobDTO job) {
+        this.job = job;
     }
 
     public EmployeeDTO getEmployee() {
@@ -242,9 +220,7 @@ public class EmployeeDTO implements Serializable {
             ", allergies='" + getAllergies() + "'" +
             ", birthDate='" + getBirthDate() + "'" +
             ", note='" + getNote() + "'" +
-            ", trainings=" + getTrainings() +
-            ", todos=" + getTodos() +
-            ", historicData=" + getHistoricData() +
+            ", job=" + getJob() +
             ", employee=" + getEmployee() +
             "}";
     }

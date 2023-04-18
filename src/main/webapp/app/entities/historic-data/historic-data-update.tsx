@@ -51,6 +51,7 @@ export const HistoricDataUpdate = () => {
     const entity = {
       ...historicDataEntity,
       ...values,
+      employee: employees.find(it => it.id.toString() === values.employee.toString()),
     };
 
     if (isNew) {
@@ -65,6 +66,7 @@ export const HistoricDataUpdate = () => {
       ? {}
       : {
           ...historicDataEntity,
+          employee: historicDataEntity?.employee?.id,
         };
 
   return (
@@ -98,6 +100,16 @@ export const HistoricDataUpdate = () => {
                 }}
               />
               <ValidatedField label="Link" id="historic-data-link" name="link" data-cy="link" type="text" />
+              <ValidatedField id="historic-data-employee" name="employee" data-cy="employee" label="Employee" type="select">
+                <option value="" key="0" />
+                {employees
+                  ? employees.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/historic-data" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

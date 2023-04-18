@@ -80,39 +80,8 @@ export const EmployeeDetail = () => {
             <span id="note">Note</span>
           </dt>
           <dd>{employeeEntity.note}</dd>
-          <dt>Training</dt>
-          <dd>
-            {employeeEntity.trainings
-              ? employeeEntity.trainings.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.code}</a>
-                    {employeeEntity.trainings && i === employeeEntity.trainings.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>Todo</dt>
-          <dd>
-            {employeeEntity.todos
-              ? employeeEntity.todos.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.description}</a>
-                    {employeeEntity.todos && i === employeeEntity.todos.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>Historic Data</dt>
-          <dd>
-            {employeeEntity.historicData
-              ? employeeEntity.historicData.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.name}</a>
-                    {employeeEntity.historicData && i === employeeEntity.historicData.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
+          <dt>Job</dt>
+          <dd>{employeeEntity.job ? employeeEntity.job.id : ''}</dd>
           <dt>Employee</dt>
           <dd>{employeeEntity.employee ? employeeEntity.employee.id : ''}</dd>
         </dl>

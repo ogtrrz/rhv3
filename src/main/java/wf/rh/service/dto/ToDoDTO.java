@@ -26,6 +26,8 @@ public class ToDoDTO implements Serializable {
 
     private String link;
 
+    private EmployeeDTO employee;
+
     public Long getId() {
         return id;
     }
@@ -74,6 +76,14 @@ public class ToDoDTO implements Serializable {
         this.link = link;
     }
 
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -105,6 +115,7 @@ public class ToDoDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", state='" + getState() + "'" +
             ", link='" + getLink() + "'" +
+            ", employee=" + getEmployee() +
             "}";
     }
 }

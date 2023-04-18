@@ -11,8 +11,8 @@ export interface ITraining {
   date?: string | null;
   expiry?: string | null;
   evidences?: IEvidence[] | null;
-  courses?: ICourse[] | null;
-  employees?: IEmployee[] | null;
+  course?: ICourse | null;
+  employee?: IEmployee | null;
 }
 
 export const defaultValue: Readonly<ITraining> = {};

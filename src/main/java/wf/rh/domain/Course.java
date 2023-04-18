@@ -59,34 +59,24 @@ public class Course implements Serializable {
     private String link;
 
     @OneToMany(mappedBy = "course")
-    @JsonIgnoreProperties(value = { "reqCourses", "trainings", "requirents", "course", "jobs" }, allowSetters = true)
-    private Set<Course> reqCourses = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-        name = "rel_course__training",
-        joinColumns = @JoinColumn(name = "course_id"),
-        inverseJoinColumns = @JoinColumn(name = "training_id")
-    )
-    @JsonIgnoreProperties(value = { "evidences", "courses", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evidences", "course", "employee" }, allowSetters = true)
     private Set<Training> trainings = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_course__requirents",
-        joinColumns = @JoinColumn(name = "course_id"),
-        inverseJoinColumns = @JoinColumn(name = "requirents_id")
-    )
-    @JsonIgnoreProperties(value = { "codes" }, allowSetters = true)
+    @OneToMany(mappedBy = "course")
+    @JsonIgnoreProperties(value = { "course" }, allowSetters = true)
     private Set<Requirents> requirents = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "reqCourses", "trainings", "requirents", "course", "jobs" }, allowSetters = true)
-    private Course course;
+    @OneToMany(mappedBy = "course")
+    @JsonIgnoreProperties(value = { "trainings", "requirents", "reqCourses", "job", "course" }, allowSetters = true)
+    private Set<Course> reqCourses = new HashSet<>();
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToOne
     @JsonIgnoreProperties(value = { "courses", "employees" }, allowSetters = true)
-    private Set<Job> jobs = new HashSet<>();
+    private Job job;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "requirents", "reqCourses", "job", "course" }, allowSetters = true)
+    private Course course;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -220,6 +210,68 @@ public class Course implements Serializable {
         this.link = link;
     }
 
+    public Set<Training> getTrainings() {
+        return this.trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        if (this.trainings != null) {
+            this.trainings.forEach(i -> i.setCourse(null));
+        }
+        if (trainings != null) {
+            trainings.forEach(i -> i.setCourse(this));
+        }
+        this.trainings = trainings;
+    }
+
+    public Course trainings(Set<Training> trainings) {
+        this.setTrainings(trainings);
+        return this;
+    }
+
+    public Course addTraining(Training training) {
+        this.trainings.add(training);
+        training.setCourse(this);
+        return this;
+    }
+
+    public Course removeTraining(Training training) {
+        this.trainings.remove(training);
+        training.setCourse(null);
+        return this;
+    }
+
+    public Set<Requirents> getRequirents() {
+        return this.requirents;
+    }
+
+    public void setRequirents(Set<Requirents> requirents) {
+        if (this.requirents != null) {
+            this.requirents.forEach(i -> i.setCourse(null));
+        }
+        if (requirents != null) {
+            requirents.forEach(i -> i.setCourse(this));
+        }
+        this.requirents = requirents;
+    }
+
+    public Course requirents(Set<Requirents> requirents) {
+        this.setRequirents(requirents);
+        return this;
+    }
+
+    public Course addRequirents(Requirents requirents) {
+        this.requirents.add(requirents);
+        requirents.setCourse(this);
+        return this;
+    }
+
+    public Course removeRequirents(Requirents requirents) {
+        this.requirents.remove(requirents);
+        requirents.setCourse(null);
+        return this;
+    }
+
     public Set<Course> getReqCourses() {
         return this.reqCourses;
     }
@@ -251,53 +303,16 @@ public class Course implements Serializable {
         return this;
     }
 
-    public Set<Training> getTrainings() {
-        return this.trainings;
+    public Job getJob() {
+        return this.job;
     }
 
-    public void setTrainings(Set<Training> trainings) {
-        this.trainings = trainings;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
-    public Course trainings(Set<Training> trainings) {
-        this.setTrainings(trainings);
-        return this;
-    }
-
-    public Course addTraining(Training training) {
-        this.trainings.add(training);
-        training.getCourses().add(this);
-        return this;
-    }
-
-    public Course removeTraining(Training training) {
-        this.trainings.remove(training);
-        training.getCourses().remove(this);
-        return this;
-    }
-
-    public Set<Requirents> getRequirents() {
-        return this.requirents;
-    }
-
-    public void setRequirents(Set<Requirents> requirents) {
-        this.requirents = requirents;
-    }
-
-    public Course requirents(Set<Requirents> requirents) {
-        this.setRequirents(requirents);
-        return this;
-    }
-
-    public Course addRequirents(Requirents requirents) {
-        this.requirents.add(requirents);
-        requirents.getCodes().add(this);
-        return this;
-    }
-
-    public Course removeRequirents(Requirents requirents) {
-        this.requirents.remove(requirents);
-        requirents.getCodes().remove(this);
+    public Course job(Job job) {
+        this.setJob(job);
         return this;
     }
 
@@ -311,37 +326,6 @@ public class Course implements Serializable {
 
     public Course course(Course course) {
         this.setCourse(course);
-        return this;
-    }
-
-    public Set<Job> getJobs() {
-        return this.jobs;
-    }
-
-    public void setJobs(Set<Job> jobs) {
-        if (this.jobs != null) {
-            this.jobs.forEach(i -> i.removeCourse(this));
-        }
-        if (jobs != null) {
-            jobs.forEach(i -> i.addCourse(this));
-        }
-        this.jobs = jobs;
-    }
-
-    public Course jobs(Set<Job> jobs) {
-        this.setJobs(jobs);
-        return this;
-    }
-
-    public Course addJob(Job job) {
-        this.jobs.add(job);
-        job.getCourses().add(this);
-        return this;
-    }
-
-    public Course removeJob(Job job) {
-        this.jobs.remove(job);
-        job.getCourses().remove(this);
         return this;
     }
 

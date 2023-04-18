@@ -58,40 +58,34 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "training",
+      "otherEntityRelationshipName": "course",
+      "relationshipName": "training",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "requirents",
+      "otherEntityRelationshipName": "course",
+      "relationshipName": "requirents",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "course",
       "otherEntityRelationshipName": "course",
       "relationshipName": "reqCourse",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityField": "code",
-      "otherEntityName": "training",
+      "otherEntityName": "job",
       "otherEntityRelationshipName": "course",
-      "ownerSide": true,
-      "relationshipName": "training",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "code",
-      "otherEntityName": "requirents",
-      "otherEntityRelationshipName": "code",
-      "ownerSide": true,
-      "relationshipName": "requirents",
-      "relationshipType": "many-to-many"
+      "relationshipName": "job",
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "course",
       "otherEntityRelationshipName": "reqCourse",
       "relationshipName": "course",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityField": "jobTitle",
-      "otherEntityName": "job",
-      "otherEntityRelationshipName": "course",
-      "ownerSide": false,
-      "relationshipName": "job",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

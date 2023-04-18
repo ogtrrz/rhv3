@@ -118,6 +118,9 @@ export const ToDo = () => {
                 <th className="hand" onClick={sort('link')}>
                   Link <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  Employee <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -134,6 +137,7 @@ export const ToDo = () => {
                   <td>{toDo.description}</td>
                   <td>{toDo.state}</td>
                   <td>{toDo.link}</td>
+                  <td>{toDo.employee ? <Link to={`/employee/${toDo.employee.id}`}>{toDo.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/to-do/${toDo.id}`} color="info" size="sm" data-cy="entityDetailsButton">

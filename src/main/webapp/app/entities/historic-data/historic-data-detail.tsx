@@ -40,6 +40,8 @@ export const HistoricDataDetail = () => {
             <span id="link">Link</span>
           </dt>
           <dd>{historicDataEntity.link}</dd>
+          <dt>Employee</dt>
+          <dd>{historicDataEntity.employee ? historicDataEntity.employee.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/historic-data" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

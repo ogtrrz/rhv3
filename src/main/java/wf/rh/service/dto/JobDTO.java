@@ -1,9 +1,7 @@
 package wf.rh.service.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 import wf.rh.domain.enumeration.Handling;
 import wf.rh.domain.enumeration.Rol;
@@ -23,10 +21,6 @@ public class JobDTO implements Serializable {
     private Rol rol;
 
     private Handling handling;
-
-    private Set<CourseDTO> courses = new HashSet<>();
-
-    private Set<EmployeeDTO> employees = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -60,22 +54,6 @@ public class JobDTO implements Serializable {
         this.handling = handling;
     }
 
-    public Set<CourseDTO> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<CourseDTO> courses) {
-        this.courses = courses;
-    }
-
-    public Set<EmployeeDTO> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Set<EmployeeDTO> employees) {
-        this.employees = employees;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -105,8 +83,6 @@ public class JobDTO implements Serializable {
             ", jobTitle='" + getJobTitle() + "'" +
             ", rol='" + getRol() + "'" +
             ", handling='" + getHandling() + "'" +
-            ", courses=" + getCourses() +
-            ", employees=" + getEmployees() +
             "}";
     }
 }

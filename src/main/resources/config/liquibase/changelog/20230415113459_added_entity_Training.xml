@@ -29,24 +29,16 @@
             <column name="expiry" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="course_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="training" columnName="date" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="training" columnName="expiry" columnDataType="${datetimeType}"/>
-    </changeSet>
-
-    <changeSet id="20230415113459-1-relations" author="jhipster">
-
-        <createTable tableName="rel_training__evidence">
-            <column name="evidence_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="training_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="training_id, evidence_id" tableName="rel_training__evidence"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

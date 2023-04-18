@@ -29,20 +29,16 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "code",
       "otherEntityName": "course",
       "otherEntityRelationshipName": "job",
-      "ownerSide": true,
       "relationshipName": "course",
-      "relationshipType": "many-to-many"
+      "relationshipType": "one-to-many"
     },
     {
-      "otherEntityField": "user",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "job",
-      "ownerSide": true,
       "relationshipName": "employee",
-      "relationshipType": "many-to-many"
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceClass"

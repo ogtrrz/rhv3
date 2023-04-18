@@ -112,6 +112,9 @@ export const HistoricData = () => {
                 <th className="hand" onClick={sort('link')}>
                   Link <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  Employee <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -126,6 +129,9 @@ export const HistoricData = () => {
                   <td>{historicData.employeeId}</td>
                   <td>{historicData.name}</td>
                   <td>{historicData.link}</td>
+                  <td>
+                    {historicData.employee ? <Link to={`/employee/${historicData.employee.id}`}>{historicData.employee.id}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/historic-data/${historicData.id}`} color="info" size="sm" data-cy="entityDetailsButton">

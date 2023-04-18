@@ -92,36 +92,36 @@ enum Kind {
 	CERTIFICATE, ONTHEJOB, COURSE
 }
 
-relationship ManyToMany {
-	Job{course(code)} to Course{job(jobTitle)}
+relationship OneToMany {
+	Job{course} to Course
 }
 
-relationship ManyToMany {
-	Job{employee(user)} to Employee{job(jobTitle)}
+relationship OneToMany {
+	Job{employee} to Employee
 }
 
-relationship ManyToMany {
-	Course{training(code)} to Training{course(code)}
+relationship OneToMany {
+	Course{training} to Training
 }
 
-relationship ManyToMany {
-	Employee{training(code)} to Training{employee(user)}
+relationship OneToMany {
+	Employee{training} to Training
 }
 
-relationship ManyToMany {
-	Course{requirents(code)} to Requirents{code(code)}
+relationship OneToMany {
+	Course{requirents} to Requirents
 }
 
-relationship ManyToMany {
-	Training{evidence(description)} to Evidence{training(code)}
+relationship OneToMany {
+	Training{evidence} to Evidence
 }
 
-relationship ManyToMany {
-	Employee{todo(description)} to ToDo{employee(user)}
+relationship OneToMany {
+	Employee{todo} to ToDo
 }
 
-relationship ManyToMany {
-	Employee{historicData(name)} to HistoricData{employee(user)}
+relationship OneToMany {
+	Employee{historicData} to HistoricData
 }
 
 relationship OneToMany {

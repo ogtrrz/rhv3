@@ -55,6 +55,7 @@ export const ToDoUpdate = () => {
     const entity = {
       ...toDoEntity,
       ...values,
+      employee: employees.find(it => it.id.toString() === values.employee.toString()),
     };
 
     if (isNew) {
@@ -73,6 +74,7 @@ export const ToDoUpdate = () => {
           state: 'NEW',
           ...toDoEntity,
           date: convertDateTimeFromServer(toDoEntity.date),
+          employee: toDoEntity?.employee?.id,
         };
 
   return (
@@ -119,6 +121,16 @@ export const ToDoUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField label="Link" id="to-do-link" name="link" data-cy="link" type="text" />
+              <ValidatedField id="to-do-employee" name="employee" data-cy="employee" label="Employee" type="select">
+                <option value="" key="0" />
+                {employees
+                  ? employees.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/to-do" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

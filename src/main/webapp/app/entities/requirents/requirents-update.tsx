@@ -53,6 +53,7 @@ export const RequirentsUpdate = () => {
     const entity = {
       ...requirentsEntity,
       ...values,
+      course: courses.find(it => it.id.toString() === values.course.toString()),
     };
 
     if (isNew) {
@@ -68,6 +69,7 @@ export const RequirentsUpdate = () => {
       : {
           kind: 'CERTIFICATE',
           ...requirentsEntity,
+          course: requirentsEntity?.course?.id,
         };
 
   return (
@@ -113,6 +115,16 @@ export const RequirentsUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField label="Description" id="requirents-description" name="description" data-cy="description" type="text" />
+              <ValidatedField id="requirents-course" name="course" data-cy="course" label="Course" type="select">
+                <option value="" key="0" />
+                {courses
+                  ? courses.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/requirents" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

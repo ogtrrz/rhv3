@@ -5,7 +5,7 @@ export interface IHistoricData {
   employeeId?: number | null;
   name?: string;
   link?: string | null;
-  employees?: IEmployee[] | null;
+  employee?: IEmployee | null;
 }
 
 export const defaultValue: Readonly<IHistoricData> = {};

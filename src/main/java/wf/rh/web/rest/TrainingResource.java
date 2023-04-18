@@ -142,21 +142,12 @@ public class TrainingResource {
      * {@code GET  /trainings} : get all the trainings.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of trainings in body.
      */
     @GetMapping("/trainings")
-    public ResponseEntity<List<TrainingDTO>> getAllTrainings(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
-    ) {
+    public ResponseEntity<List<TrainingDTO>> getAllTrainings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Trainings");
-        Page<TrainingDTO> page;
-        if (eagerload) {
-            page = trainingService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = trainingService.findAll(pageable);
-        }
+        Page<TrainingDTO> page = trainingService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

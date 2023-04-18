@@ -9,10 +9,6 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getCourses } from 'app/entities/course/course.reducer';
-import { ITraining } from 'app/shared/model/training.model';
-import { getEntities as getTrainings } from 'app/entities/training/training.reducer';
-import { IRequirents } from 'app/shared/model/requirents.model';
-import { getEntities as getRequirents } from 'app/entities/requirents/requirents.reducer';
 import { IJob } from 'app/shared/model/job.model';
 import { getEntities as getJobs } from 'app/entities/job/job.reducer';
 import { ICourse } from 'app/shared/model/course.model';
@@ -28,8 +24,6 @@ export const CourseUpdate = () => {
   const isNew = id === undefined;
 
   const courses = useAppSelector(state => state.course.entities);
-  const trainings = useAppSelector(state => state.training.entities);
-  const requirents = useAppSelector(state => state.requirents.entities);
   const jobs = useAppSelector(state => state.job.entities);
   const courseEntity = useAppSelector(state => state.course.entity);
   const loading = useAppSelector(state => state.course.loading);
@@ -49,8 +43,6 @@ export const CourseUpdate = () => {
     }
 
     dispatch(getCourses({}));
-    dispatch(getTrainings({}));
-    dispatch(getRequirents({}));
     dispatch(getJobs({}));
   }, []);
 
@@ -64,9 +56,8 @@ export const CourseUpdate = () => {
     const entity = {
       ...courseEntity,
       ...values,
-      trainings: mapIdList(values.trainings),
-      requirents: mapIdList(values.requirents),
       course: courses.find(it => it.id.toString() === values.course.toString()),
+      job: jobs.find(it => it.id.toString() === values.job.toString()),
     };
 
     if (isNew) {
@@ -82,8 +73,7 @@ export const CourseUpdate = () => {
       : {
           typeCourse: 'PRESENT',
           ...courseEntity,
-          trainings: courseEntity?.trainings?.map(e => e.id.toString()),
-          requirents: courseEntity?.requirents?.map(e => e.id.toString()),
+          job: courseEntity?.job?.id,
           course: courseEntity?.course?.id,
         };
 
@@ -168,22 +158,12 @@ export const CourseUpdate = () => {
                 }}
               />
               <ValidatedField label="Link" id="course-link" name="link" data-cy="link" type="text" />
-              <ValidatedField label="Training" id="course-training" data-cy="training" type="select" multiple name="trainings">
+              <ValidatedField id="course-job" name="job" data-cy="job" label="Job" type="select">
                 <option value="" key="0" />
-                {trainings
-                  ? trainings.map(otherEntity => (
+                {jobs
+                  ? jobs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.code}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField label="Requirents" id="course-requirents" data-cy="requirents" type="select" multiple name="requirents">
-                <option value="" key="0" />
-                {requirents
-                  ? requirents.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.code}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

@@ -53,6 +53,7 @@ export const EvidenceUpdate = () => {
     const entity = {
       ...evidenceEntity,
       ...values,
+      training: trainings.find(it => it.id.toString() === values.training.toString()),
     };
 
     if (isNew) {
@@ -70,6 +71,7 @@ export const EvidenceUpdate = () => {
       : {
           ...evidenceEntity,
           expiration: convertDateTimeFromServer(evidenceEntity.expiration),
+          training: evidenceEntity?.training?.id,
         };
 
   return (
@@ -110,6 +112,16 @@ export const EvidenceUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField label="Link" id="evidence-link" name="link" data-cy="link" type="text" />
+              <ValidatedField id="evidence-training" name="training" data-cy="training" label="Training" type="select">
+                <option value="" key="0" />
+                {trainings
+                  ? trainings.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/evidence" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

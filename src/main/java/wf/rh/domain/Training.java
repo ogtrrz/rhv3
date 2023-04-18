@@ -41,22 +41,17 @@ public class Training implements Serializable {
     @Column(name = "expiry")
     private Instant expiry;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_training__evidence",
-        joinColumns = @JoinColumn(name = "training_id"),
-        inverseJoinColumns = @JoinColumn(name = "evidence_id")
-    )
-    @JsonIgnoreProperties(value = { "trainings" }, allowSetters = true)
+    @OneToMany(mappedBy = "training")
+    @JsonIgnoreProperties(value = { "training" }, allowSetters = true)
     private Set<Evidence> evidences = new HashSet<>();
 
-    @ManyToMany(mappedBy = "trainings")
-    @JsonIgnoreProperties(value = { "reqCourses", "trainings", "requirents", "course", "jobs" }, allowSetters = true)
-    private Set<Course> courses = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "requirents", "reqCourses", "job", "course" }, allowSetters = true)
+    private Course course;
 
-    @ManyToMany(mappedBy = "trainings")
-    @JsonIgnoreProperties(value = { "managers", "trainings", "todos", "historicData", "employee", "jobs" }, allowSetters = true)
-    private Set<Employee> employees = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "todos", "historicData", "managers", "job", "employee" }, allowSetters = true)
+    private Employee employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -143,6 +138,12 @@ public class Training implements Serializable {
     }
 
     public void setEvidences(Set<Evidence> evidences) {
+        if (this.evidences != null) {
+            this.evidences.forEach(i -> i.setTraining(null));
+        }
+        if (evidences != null) {
+            evidences.forEach(i -> i.setTraining(this));
+        }
         this.evidences = evidences;
     }
 
@@ -153,75 +154,39 @@ public class Training implements Serializable {
 
     public Training addEvidence(Evidence evidence) {
         this.evidences.add(evidence);
-        evidence.getTrainings().add(this);
+        evidence.setTraining(this);
         return this;
     }
 
     public Training removeEvidence(Evidence evidence) {
         this.evidences.remove(evidence);
-        evidence.getTrainings().remove(this);
+        evidence.setTraining(null);
         return this;
     }
 
-    public Set<Course> getCourses() {
-        return this.courses;
+    public Course getCourse() {
+        return this.course;
     }
 
-    public void setCourses(Set<Course> courses) {
-        if (this.courses != null) {
-            this.courses.forEach(i -> i.removeTraining(this));
-        }
-        if (courses != null) {
-            courses.forEach(i -> i.addTraining(this));
-        }
-        this.courses = courses;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public Training courses(Set<Course> courses) {
-        this.setCourses(courses);
+    public Training course(Course course) {
+        this.setCourse(course);
         return this;
     }
 
-    public Training addCourse(Course course) {
-        this.courses.add(course);
-        course.getTrainings().add(this);
-        return this;
+    public Employee getEmployee() {
+        return this.employee;
     }
 
-    public Training removeCourse(Course course) {
-        this.courses.remove(course);
-        course.getTrainings().remove(this);
-        return this;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Set<Employee> getEmployees() {
-        return this.employees;
-    }
-
-    public void setEmployees(Set<Employee> employees) {
-        if (this.employees != null) {
-            this.employees.forEach(i -> i.removeTraining(this));
-        }
-        if (employees != null) {
-            employees.forEach(i -> i.addTraining(this));
-        }
-        this.employees = employees;
-    }
-
-    public Training employees(Set<Employee> employees) {
-        this.setEmployees(employees);
-        return this;
-    }
-
-    public Training addEmployee(Employee employee) {
-        this.employees.add(employee);
-        employee.getTrainings().add(this);
-        return this;
-    }
-
-    public Training removeEmployee(Employee employee) {
-        this.employees.remove(employee);
-        employee.getTrainings().remove(this);
+    public Training employee(Employee employee) {
+        this.setEmployee(employee);
         return this;
     }
 

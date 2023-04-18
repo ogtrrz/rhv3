@@ -38,18 +38,12 @@ public class Job implements Serializable {
     @Column(name = "handling")
     private Handling handling;
 
-    @ManyToMany
-    @JoinTable(name = "rel_job__course", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-    @JsonIgnoreProperties(value = { "reqCourses", "trainings", "requirents", "course", "jobs" }, allowSetters = true)
+    @OneToMany(mappedBy = "job")
+    @JsonIgnoreProperties(value = { "trainings", "requirents", "reqCourses", "job", "course" }, allowSetters = true)
     private Set<Course> courses = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_job__employee",
-        joinColumns = @JoinColumn(name = "job_id"),
-        inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    @JsonIgnoreProperties(value = { "managers", "trainings", "todos", "historicData", "employee", "jobs" }, allowSetters = true)
+    @OneToMany(mappedBy = "job")
+    @JsonIgnoreProperties(value = { "trainings", "todos", "historicData", "managers", "job", "employee" }, allowSetters = true)
     private Set<Employee> employees = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -111,6 +105,12 @@ public class Job implements Serializable {
     }
 
     public void setCourses(Set<Course> courses) {
+        if (this.courses != null) {
+            this.courses.forEach(i -> i.setJob(null));
+        }
+        if (courses != null) {
+            courses.forEach(i -> i.setJob(this));
+        }
         this.courses = courses;
     }
 
@@ -121,13 +121,13 @@ public class Job implements Serializable {
 
     public Job addCourse(Course course) {
         this.courses.add(course);
-        course.getJobs().add(this);
+        course.setJob(this);
         return this;
     }
 
     public Job removeCourse(Course course) {
         this.courses.remove(course);
-        course.getJobs().remove(this);
+        course.setJob(null);
         return this;
     }
 
@@ -136,6 +136,12 @@ public class Job implements Serializable {
     }
 
     public void setEmployees(Set<Employee> employees) {
+        if (this.employees != null) {
+            this.employees.forEach(i -> i.setJob(null));
+        }
+        if (employees != null) {
+            employees.forEach(i -> i.setJob(this));
+        }
         this.employees = employees;
     }
 
@@ -146,13 +152,13 @@ public class Job implements Serializable {
 
     public Job addEmployee(Employee employee) {
         this.employees.add(employee);
-        employee.getJobs().add(this);
+        employee.setJob(this);
         return this;
     }
 
     public Job removeEmployee(Employee employee) {
         this.employees.remove(employee);
-        employee.getJobs().remove(this);
+        employee.setJob(null);
         return this;
     }
 

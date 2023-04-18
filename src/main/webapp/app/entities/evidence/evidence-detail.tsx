@@ -50,6 +50,8 @@ export const EvidenceDetail = () => {
             <span id="link">Link</span>
           </dt>
           <dd>{evidenceEntity.link}</dd>
+          <dt>Training</dt>
+          <dd>{evidenceEntity.training ? evidenceEntity.training.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/evidence" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

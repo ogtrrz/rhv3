@@ -36,12 +36,10 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "user",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "todo",
-      "ownerSide": false,
       "relationshipName": "employee",
-      "relationshipType": "many-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

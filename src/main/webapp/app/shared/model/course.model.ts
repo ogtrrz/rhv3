@@ -14,11 +14,11 @@ export interface ICourse {
   durationAuthorizationInMonth?: number | null;
   description?: string | null;
   link?: string | null;
-  reqCourses?: ICourse[] | null;
   trainings?: ITraining[] | null;
   requirents?: IRequirents[] | null;
+  reqCourses?: ICourse[] | null;
+  job?: IJob | null;
   course?: ICourse | null;
-  jobs?: IJob[] | null;
 }
 
 export const defaultValue: Readonly<ICourse> = {};

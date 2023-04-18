@@ -9,7 +9,7 @@ export interface IToDo {
   description?: string;
   state?: StateToDo | null;
   link?: string | null;
-  employees?: IEmployee[] | null;
+  employee?: IEmployee | null;
 }
 
 export const defaultValue: Readonly<IToDo> = {};

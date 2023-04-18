@@ -89,15 +89,6 @@ public class EmployeeService {
     }
 
     /**
-     * Get all the employees with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<EmployeeDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return employeeRepository.findAllWithEagerRelationships(pageable).map(employeeMapper::toDto);
-    }
-
-    /**
      * Get one employee by id.
      *
      * @param id the id of the entity.
@@ -106,7 +97,7 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public Optional<EmployeeDTO> findOne(Long id) {
         log.debug("Request to get Employee : {}", id);
-        return employeeRepository.findOneWithEagerRelationships(id).map(employeeMapper::toDto);
+        return employeeRepository.findById(id).map(employeeMapper::toDto);
     }
 
     /**

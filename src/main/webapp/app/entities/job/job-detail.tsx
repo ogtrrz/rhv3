@@ -40,28 +40,6 @@ export const JobDetail = () => {
             <span id="handling">Handling</span>
           </dt>
           <dd>{jobEntity.handling}</dd>
-          <dt>Course</dt>
-          <dd>
-            {jobEntity.courses
-              ? jobEntity.courses.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.code}</a>
-                    {jobEntity.courses && i === jobEntity.courses.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>Employee</dt>
-          <dd>
-            {jobEntity.employees
-              ? jobEntity.employees.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.user}</a>
-                    {jobEntity.employees && i === jobEntity.employees.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
         </dl>
         <Button tag={Link} to="/job" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

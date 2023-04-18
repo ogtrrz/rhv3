@@ -27,31 +27,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="20230415113455-1-relations" author="jhipster">
-
-        <createTable tableName="rel_job__course">
-            <column name="course_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="job_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="job_id, course_id" tableName="rel_job__course"/>
-
-        <createTable tableName="rel_job__employee">
-            <column name="employee_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="job_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="job_id, employee_id" tableName="rel_job__employee"/>
-    </changeSet>
-
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

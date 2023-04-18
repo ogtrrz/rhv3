@@ -36,12 +36,10 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "code",
       "otherEntityName": "course",
       "otherEntityRelationshipName": "requirents",
-      "ownerSide": false,
-      "relationshipName": "code",
-      "relationshipType": "many-to-many"
+      "relationshipName": "course",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

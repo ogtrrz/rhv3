@@ -20,6 +20,8 @@ public class HistoricDataDTO implements Serializable {
 
     private String link;
 
+    private EmployeeDTO employee;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +54,14 @@ public class HistoricDataDTO implements Serializable {
         this.link = link;
     }
 
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,6 +91,7 @@ public class HistoricDataDTO implements Serializable {
             ", employeeId=" + getEmployeeId() +
             ", name='" + getName() + "'" +
             ", link='" + getLink() + "'" +
+            ", employee=" + getEmployee() +
             "}";
     }
 }

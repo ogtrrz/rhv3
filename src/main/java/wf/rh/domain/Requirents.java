@@ -2,8 +2,6 @@ package wf.rh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import wf.rh.domain.enumeration.Kind;
@@ -42,9 +40,9 @@ public class Requirents implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "requirents")
-    @JsonIgnoreProperties(value = { "reqCourses", "trainings", "requirents", "course", "jobs" }, allowSetters = true)
-    private Set<Course> codes = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "requirents", "reqCourses", "job", "course" }, allowSetters = true)
+    private Course course;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -126,34 +124,16 @@ public class Requirents implements Serializable {
         this.description = description;
     }
 
-    public Set<Course> getCodes() {
-        return this.codes;
+    public Course getCourse() {
+        return this.course;
     }
 
-    public void setCodes(Set<Course> courses) {
-        if (this.codes != null) {
-            this.codes.forEach(i -> i.removeRequirents(this));
-        }
-        if (courses != null) {
-            courses.forEach(i -> i.addRequirents(this));
-        }
-        this.codes = courses;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public Requirents codes(Set<Course> courses) {
-        this.setCodes(courses);
-        return this;
-    }
-
-    public Requirents addCode(Course course) {
-        this.codes.add(course);
-        course.getRequirents().add(this);
-        return this;
-    }
-
-    public Requirents removeCode(Course course) {
-        this.codes.remove(course);
-        course.getRequirents().remove(this);
+    public Requirents course(Course course) {
+        this.setCourse(course);
         return this;
     }
 
