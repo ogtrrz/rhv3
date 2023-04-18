@@ -19,12 +19,12 @@ export interface IEmployee {
   allergies?: string | null;
   birthDate?: string | null;
   note?: string | null;
-  managers?: IEmployee[] | null;
   trainings?: ITraining[] | null;
   todos?: IToDo[] | null;
   historicData?: IHistoricData[] | null;
+  managers?: IEmployee[] | null;
+  job?: IJob | null;
   employee?: IEmployee | null;
-  jobs?: IJob[] | null;
 }
 
 export const defaultValue: Readonly<IEmployee> = {};

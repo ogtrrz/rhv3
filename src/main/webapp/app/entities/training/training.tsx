@@ -118,6 +118,12 @@ export const Training = () => {
                 <th className="hand" onClick={sort('expiry')}>
                   Expiry <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  Course <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Employee <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -134,6 +140,8 @@ export const Training = () => {
                   <td>{training.code}</td>
                   <td>{training.date ? <TextFormat type="date" value={training.date} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{training.expiry ? <TextFormat type="date" value={training.expiry} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{training.course ? <Link to={`/course/${training.course.id}`}>{training.course.id}</Link> : ''}</td>
+                  <td>{training.employee ? <Link to={`/employee/${training.employee.id}`}>{training.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/training/${training.id}`} color="info" size="sm" data-cy="entityDetailsButton">

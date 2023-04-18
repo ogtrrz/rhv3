@@ -48,17 +48,10 @@ export const TrainingDetail = () => {
             <span id="expiry">Expiry</span>
           </dt>
           <dd>{trainingEntity.expiry ? <TextFormat value={trainingEntity.expiry} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
-          <dt>Evidence</dt>
-          <dd>
-            {trainingEntity.evidences
-              ? trainingEntity.evidences.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.description}</a>
-                    {trainingEntity.evidences && i === trainingEntity.evidences.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
+          <dt>Course</dt>
+          <dd>{trainingEntity.course ? trainingEntity.course.id : ''}</dd>
+          <dt>Employee</dt>
+          <dd>{trainingEntity.employee ? trainingEntity.employee.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/training" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

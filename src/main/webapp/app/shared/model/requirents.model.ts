@@ -8,7 +8,7 @@ export interface IRequirents {
   expirationInMonth?: number | null;
   kind?: Kind | null;
   description?: string | null;
-  codes?: ICourse[] | null;
+  course?: ICourse | null;
 }
 
 export const defaultValue: Readonly<IRequirents> = {};

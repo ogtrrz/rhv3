@@ -4,19 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!--
-        Added the constraints for entity Course.
+        Added the constraints for entity Requirents.
     -->
-    <changeSet id="20230415113457-2" author="jhipster">
-
-        <addForeignKeyConstraint baseColumnNames="job_id"
-                                 baseTableName="course"
-                                 constraintName="fk_course__job_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="job"/>
+    <changeSet id="20230415113458-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="course_id"
-                                 baseTableName="course"
-                                 constraintName="fk_course__course_id"
+                                 baseTableName="requirents"
+                                 constraintName="fk_requirents__course_id"
                                  referencedColumnNames="id"
                                  referencedTableName="course"/>
     </changeSet>

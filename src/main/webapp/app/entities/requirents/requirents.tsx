@@ -118,6 +118,9 @@ export const Requirents = () => {
                 <th className="hand" onClick={sort('description')}>
                   Description <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  Course <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -134,6 +137,7 @@ export const Requirents = () => {
                   <td>{requirents.expirationInMonth}</td>
                   <td>{requirents.kind}</td>
                   <td>{requirents.description}</td>
+                  <td>{requirents.course ? <Link to={`/course/${requirents.course.id}`}>{requirents.course.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/requirents/${requirents.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -3,8 +3,6 @@ package wf.rh.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import wf.rh.domain.enumeration.StateToDo;
@@ -43,9 +41,9 @@ public class ToDo implements Serializable {
     @Column(name = "link")
     private String link;
 
-    @ManyToMany(mappedBy = "todos")
-    @JsonIgnoreProperties(value = { "managers", "trainings", "todos", "historicData", "employee", "jobs" }, allowSetters = true)
-    private Set<Employee> employees = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "todos", "historicData", "managers", "job", "employee" }, allowSetters = true)
+    private Employee employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -127,34 +125,16 @@ public class ToDo implements Serializable {
         this.link = link;
     }
 
-    public Set<Employee> getEmployees() {
-        return this.employees;
+    public Employee getEmployee() {
+        return this.employee;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        if (this.employees != null) {
-            this.employees.forEach(i -> i.removeTodo(this));
-        }
-        if (employees != null) {
-            employees.forEach(i -> i.addTodo(this));
-        }
-        this.employees = employees;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public ToDo employees(Set<Employee> employees) {
-        this.setEmployees(employees);
-        return this;
-    }
-
-    public ToDo addEmployee(Employee employee) {
-        this.employees.add(employee);
-        employee.getTodos().add(this);
-        return this;
-    }
-
-    public ToDo removeEmployee(Employee employee) {
-        this.employees.remove(employee);
-        employee.getTodos().remove(this);
+    public ToDo employee(Employee employee) {
+        this.setEmployee(employee);
         return this;
     }
 

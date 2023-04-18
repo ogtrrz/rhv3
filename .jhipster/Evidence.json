@@ -35,12 +35,10 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "code",
       "otherEntityName": "training",
       "otherEntityRelationshipName": "evidence",
-      "ownerSide": false,
       "relationshipName": "training",
-      "relationshipType": "many-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

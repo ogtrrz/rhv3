@@ -30,6 +30,10 @@
     <include file="config/liquibase/changelog/20230415113456_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230415113457_added_entity_constraints_Course.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230415113459_added_entity_constraints_Training.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230415113458_added_entity_constraints_Requirents.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230415113500_added_entity_constraints_Evidence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230415113501_added_entity_constraints_HistoricData.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230415113502_added_entity_constraints_ToDo.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -48,6 +48,8 @@ export const RequirentsDetail = () => {
             <span id="description">Description</span>
           </dt>
           <dd>{requirentsEntity.description}</dd>
+          <dt>Course</dt>
+          <dd>{requirentsEntity.course ? requirentsEntity.course.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/requirents" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

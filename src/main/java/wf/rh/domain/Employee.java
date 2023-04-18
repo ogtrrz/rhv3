@@ -74,43 +74,28 @@ public class Employee implements Serializable {
     private String note;
 
     @OneToMany(mappedBy = "employee")
-    @JsonIgnoreProperties(value = { "managers", "trainings", "todos", "historicData", "employee", "jobs" }, allowSetters = true)
-    private Set<Employee> managers = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-        name = "rel_employee__training",
-        joinColumns = @JoinColumn(name = "employee_id"),
-        inverseJoinColumns = @JoinColumn(name = "training_id")
-    )
-    @JsonIgnoreProperties(value = { "evidences", "courses", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evidences", "course", "employee" }, allowSetters = true)
     private Set<Training> trainings = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_employee__todo",
-        joinColumns = @JoinColumn(name = "employee_id"),
-        inverseJoinColumns = @JoinColumn(name = "todo_id")
-    )
-    @JsonIgnoreProperties(value = { "employees" }, allowSetters = true)
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnoreProperties(value = { "employee" }, allowSetters = true)
     private Set<ToDo> todos = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_employee__historic_data",
-        joinColumns = @JoinColumn(name = "employee_id"),
-        inverseJoinColumns = @JoinColumn(name = "historic_data_id")
-    )
-    @JsonIgnoreProperties(value = { "employees" }, allowSetters = true)
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnoreProperties(value = { "employee" }, allowSetters = true)
     private Set<HistoricData> historicData = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "managers", "trainings", "todos", "historicData", "employee", "jobs" }, allowSetters = true)
-    private Employee employee;
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnoreProperties(value = { "trainings", "todos", "historicData", "managers", "job", "employee" }, allowSetters = true)
+    private Set<Employee> managers = new HashSet<>();
 
-    @ManyToMany(mappedBy = "employees")
+    @ManyToOne
     @JsonIgnoreProperties(value = { "courses", "employees" }, allowSetters = true)
-    private Set<Job> jobs = new HashSet<>();
+    private Job job;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "todos", "historicData", "managers", "job", "employee" }, allowSetters = true)
+    private Employee employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -296,6 +281,99 @@ public class Employee implements Serializable {
         this.note = note;
     }
 
+    public Set<Training> getTrainings() {
+        return this.trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        if (this.trainings != null) {
+            this.trainings.forEach(i -> i.setEmployee(null));
+        }
+        if (trainings != null) {
+            trainings.forEach(i -> i.setEmployee(this));
+        }
+        this.trainings = trainings;
+    }
+
+    public Employee trainings(Set<Training> trainings) {
+        this.setTrainings(trainings);
+        return this;
+    }
+
+    public Employee addTraining(Training training) {
+        this.trainings.add(training);
+        training.setEmployee(this);
+        return this;
+    }
+
+    public Employee removeTraining(Training training) {
+        this.trainings.remove(training);
+        training.setEmployee(null);
+        return this;
+    }
+
+    public Set<ToDo> getTodos() {
+        return this.todos;
+    }
+
+    public void setTodos(Set<ToDo> toDos) {
+        if (this.todos != null) {
+            this.todos.forEach(i -> i.setEmployee(null));
+        }
+        if (toDos != null) {
+            toDos.forEach(i -> i.setEmployee(this));
+        }
+        this.todos = toDos;
+    }
+
+    public Employee todos(Set<ToDo> toDos) {
+        this.setTodos(toDos);
+        return this;
+    }
+
+    public Employee addTodo(ToDo toDo) {
+        this.todos.add(toDo);
+        toDo.setEmployee(this);
+        return this;
+    }
+
+    public Employee removeTodo(ToDo toDo) {
+        this.todos.remove(toDo);
+        toDo.setEmployee(null);
+        return this;
+    }
+
+    public Set<HistoricData> getHistoricData() {
+        return this.historicData;
+    }
+
+    public void setHistoricData(Set<HistoricData> historicData) {
+        if (this.historicData != null) {
+            this.historicData.forEach(i -> i.setEmployee(null));
+        }
+        if (historicData != null) {
+            historicData.forEach(i -> i.setEmployee(this));
+        }
+        this.historicData = historicData;
+    }
+
+    public Employee historicData(Set<HistoricData> historicData) {
+        this.setHistoricData(historicData);
+        return this;
+    }
+
+    public Employee addHistoricData(HistoricData historicData) {
+        this.historicData.add(historicData);
+        historicData.setEmployee(this);
+        return this;
+    }
+
+    public Employee removeHistoricData(HistoricData historicData) {
+        this.historicData.remove(historicData);
+        historicData.setEmployee(null);
+        return this;
+    }
+
     public Set<Employee> getManagers() {
         return this.managers;
     }
@@ -327,78 +405,16 @@ public class Employee implements Serializable {
         return this;
     }
 
-    public Set<Training> getTrainings() {
-        return this.trainings;
+    public Job getJob() {
+        return this.job;
     }
 
-    public void setTrainings(Set<Training> trainings) {
-        this.trainings = trainings;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
-    public Employee trainings(Set<Training> trainings) {
-        this.setTrainings(trainings);
-        return this;
-    }
-
-    public Employee addTraining(Training training) {
-        this.trainings.add(training);
-        training.getEmployees().add(this);
-        return this;
-    }
-
-    public Employee removeTraining(Training training) {
-        this.trainings.remove(training);
-        training.getEmployees().remove(this);
-        return this;
-    }
-
-    public Set<ToDo> getTodos() {
-        return this.todos;
-    }
-
-    public void setTodos(Set<ToDo> toDos) {
-        this.todos = toDos;
-    }
-
-    public Employee todos(Set<ToDo> toDos) {
-        this.setTodos(toDos);
-        return this;
-    }
-
-    public Employee addTodo(ToDo toDo) {
-        this.todos.add(toDo);
-        toDo.getEmployees().add(this);
-        return this;
-    }
-
-    public Employee removeTodo(ToDo toDo) {
-        this.todos.remove(toDo);
-        toDo.getEmployees().remove(this);
-        return this;
-    }
-
-    public Set<HistoricData> getHistoricData() {
-        return this.historicData;
-    }
-
-    public void setHistoricData(Set<HistoricData> historicData) {
-        this.historicData = historicData;
-    }
-
-    public Employee historicData(Set<HistoricData> historicData) {
-        this.setHistoricData(historicData);
-        return this;
-    }
-
-    public Employee addHistoricData(HistoricData historicData) {
-        this.historicData.add(historicData);
-        historicData.getEmployees().add(this);
-        return this;
-    }
-
-    public Employee removeHistoricData(HistoricData historicData) {
-        this.historicData.remove(historicData);
-        historicData.getEmployees().remove(this);
+    public Employee job(Job job) {
+        this.setJob(job);
         return this;
     }
 
@@ -412,37 +428,6 @@ public class Employee implements Serializable {
 
     public Employee employee(Employee employee) {
         this.setEmployee(employee);
-        return this;
-    }
-
-    public Set<Job> getJobs() {
-        return this.jobs;
-    }
-
-    public void setJobs(Set<Job> jobs) {
-        if (this.jobs != null) {
-            this.jobs.forEach(i -> i.removeEmployee(this));
-        }
-        if (jobs != null) {
-            jobs.forEach(i -> i.addEmployee(this));
-        }
-        this.jobs = jobs;
-    }
-
-    public Employee jobs(Set<Job> jobs) {
-        this.setJobs(jobs);
-        return this;
-    }
-
-    public Employee addJob(Job job) {
-        this.jobs.add(job);
-        job.getEmployees().add(this);
-        return this;
-    }
-
-    public Employee removeJob(Job job) {
-        this.jobs.remove(job);
-        job.getEmployees().remove(this);
         return this;
     }
 

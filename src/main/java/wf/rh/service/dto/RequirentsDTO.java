@@ -25,6 +25,8 @@ public class RequirentsDTO implements Serializable {
 
     private String description;
 
+    private CourseDTO course;
+
     public Long getId() {
         return id;
     }
@@ -73,6 +75,14 @@ public class RequirentsDTO implements Serializable {
         this.description = description;
     }
 
+    public CourseDTO getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseDTO course) {
+        this.course = course;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,6 +114,7 @@ public class RequirentsDTO implements Serializable {
             ", expirationInMonth=" + getExpirationInMonth() +
             ", kind='" + getKind() + "'" +
             ", description='" + getDescription() + "'" +
+            ", course=" + getCourse() +
             "}";
     }
 }

@@ -8,10 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ICourse } from 'app/shared/model/course.model';
-import { getEntities as getCourses } from 'app/entities/course/course.reducer';
-import { IEmployee } from 'app/shared/model/employee.model';
-import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { IJob } from 'app/shared/model/job.model';
 import { Rol } from 'app/shared/model/enumerations/rol.model';
 import { Handling } from 'app/shared/model/enumerations/handling.model';
@@ -25,8 +21,6 @@ export const JobUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const courses = useAppSelector(state => state.course.entities);
-  const employees = useAppSelector(state => state.employee.entities);
   const jobEntity = useAppSelector(state => state.job.entity);
   const loading = useAppSelector(state => state.job.loading);
   const updating = useAppSelector(state => state.job.updating);
@@ -44,9 +38,6 @@ export const JobUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
-
-    dispatch(getCourses({}));
-    dispatch(getEmployees({}));
   }, []);
 
   useEffect(() => {
@@ -59,8 +50,6 @@ export const JobUpdate = () => {
     const entity = {
       ...jobEntity,
       ...values,
-      courses: mapIdList(values.courses),
-      employees: mapIdList(values.employees),
     };
 
     if (isNew) {
@@ -77,8 +66,6 @@ export const JobUpdate = () => {
           rol: 'OPERATIONAL',
           handling: 'RAMP',
           ...jobEntity,
-          courses: jobEntity?.courses?.map(e => e.id.toString()),
-          employees: jobEntity?.employees?.map(e => e.id.toString()),
         };
 
   return (
@@ -121,26 +108,6 @@ export const JobUpdate = () => {
                     {handling}
                   </option>
                 ))}
-              </ValidatedField>
-              <ValidatedField label="Course" id="job-course" data-cy="course" type="select" multiple name="courses">
-                <option value="" key="0" />
-                {courses
-                  ? courses.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.code}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField label="Employee" id="job-employee" data-cy="employee" type="select" multiple name="employees">
-                <option value="" key="0" />
-                {employees
-                  ? employees.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.user}
-                      </option>
-                    ))
-                  : null}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/job" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

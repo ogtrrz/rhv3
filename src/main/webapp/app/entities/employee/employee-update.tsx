@@ -9,12 +9,6 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
-import { ITraining } from 'app/shared/model/training.model';
-import { getEntities as getTrainings } from 'app/entities/training/training.reducer';
-import { IToDo } from 'app/shared/model/to-do.model';
-import { getEntities as getToDos } from 'app/entities/to-do/to-do.reducer';
-import { IHistoricData } from 'app/shared/model/historic-data.model';
-import { getEntities as getHistoricData } from 'app/entities/historic-data/historic-data.reducer';
 import { IJob } from 'app/shared/model/job.model';
 import { getEntities as getJobs } from 'app/entities/job/job.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
@@ -29,9 +23,6 @@ export const EmployeeUpdate = () => {
   const isNew = id === undefined;
 
   const employees = useAppSelector(state => state.employee.entities);
-  const trainings = useAppSelector(state => state.training.entities);
-  const toDos = useAppSelector(state => state.toDo.entities);
-  const historicData = useAppSelector(state => state.historicData.entities);
   const jobs = useAppSelector(state => state.job.entities);
   const employeeEntity = useAppSelector(state => state.employee.entity);
   const loading = useAppSelector(state => state.employee.loading);
@@ -50,9 +41,6 @@ export const EmployeeUpdate = () => {
     }
 
     dispatch(getEmployees({}));
-    dispatch(getTrainings({}));
-    dispatch(getToDos({}));
-    dispatch(getHistoricData({}));
     dispatch(getJobs({}));
   }, []);
 
@@ -69,10 +57,8 @@ export const EmployeeUpdate = () => {
     const entity = {
       ...employeeEntity,
       ...values,
-      trainings: mapIdList(values.trainings),
-      todos: mapIdList(values.todos),
-      historicData: mapIdList(values.historicData),
       employee: employees.find(it => it.id.toString() === values.employee.toString()),
+      job: jobs.find(it => it.id.toString() === values.job.toString()),
     };
 
     if (isNew) {
@@ -92,9 +78,7 @@ export const EmployeeUpdate = () => {
           ...employeeEntity,
           hireDate: convertDateTimeFromServer(employeeEntity.hireDate),
           birthDate: convertDateTimeFromServer(employeeEntity.birthDate),
-          trainings: employeeEntity?.trainings?.map(e => e.id.toString()),
-          todos: employeeEntity?.todos?.map(e => e.id.toString()),
-          historicData: employeeEntity?.historicData?.map(e => e.id.toString()),
+          job: employeeEntity?.job?.id,
           employee: employeeEntity?.employee?.id,
         };
 
@@ -213,39 +197,12 @@ export const EmployeeUpdate = () => {
                   maxLength: { value: 2000, message: 'This field cannot be longer than 2000 characters.' },
                 }}
               />
-              <ValidatedField label="Training" id="employee-training" data-cy="training" type="select" multiple name="trainings">
+              <ValidatedField id="employee-job" name="job" data-cy="job" label="Job" type="select">
                 <option value="" key="0" />
-                {trainings
-                  ? trainings.map(otherEntity => (
+                {jobs
+                  ? jobs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.code}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField label="Todo" id="employee-todo" data-cy="todo" type="select" multiple name="todos">
-                <option value="" key="0" />
-                {toDos
-                  ? toDos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.description}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                label="Historic Data"
-                id="employee-historicData"
-                data-cy="historicData"
-                type="select"
-                multiple
-                name="historicData"
-              >
-                <option value="" key="0" />
-                {historicData
-                  ? historicData.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

@@ -41,36 +41,14 @@
             <column name="link" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="job_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="course_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-    </changeSet>
-
-    <changeSet id="20230415113457-1-relations" author="jhipster">
-
-        <createTable tableName="rel_course__training">
-            <column name="training_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="course_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="course_id, training_id" tableName="rel_course__training"/>
-
-        <createTable tableName="rel_course__requirents">
-            <column name="requirents_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="course_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="course_id, requirents_id" tableName="rel_course__requirents"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

@@ -79,48 +79,40 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "training",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "training",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "toDo",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "todo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "historicData",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "historicData",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "employee",
       "relationshipName": "manager",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityField": "code",
-      "otherEntityName": "training",
+      "otherEntityName": "job",
       "otherEntityRelationshipName": "employee",
-      "ownerSide": true,
-      "relationshipName": "training",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "description",
-      "otherEntityName": "toDo",
-      "otherEntityRelationshipName": "employee",
-      "ownerSide": true,
-      "relationshipName": "todo",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "name",
-      "otherEntityName": "historicData",
-      "otherEntityRelationshipName": "employee",
-      "ownerSide": true,
-      "relationshipName": "historicData",
-      "relationshipType": "many-to-many"
+      "relationshipName": "job",
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "manager",
       "relationshipName": "employee",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityField": "jobTitle",
-      "otherEntityName": "job",
-      "otherEntityRelationshipName": "employee",
-      "ownerSide": false,
-      "relationshipName": "job",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

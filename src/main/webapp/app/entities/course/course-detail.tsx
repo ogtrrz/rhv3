@@ -64,28 +64,8 @@ export const CourseDetail = () => {
             <span id="link">Link</span>
           </dt>
           <dd>{courseEntity.link}</dd>
-          <dt>Training</dt>
-          <dd>
-            {courseEntity.trainings
-              ? courseEntity.trainings.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.code}</a>
-                    {courseEntity.trainings && i === courseEntity.trainings.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>Requirents</dt>
-          <dd>
-            {courseEntity.requirents
-              ? courseEntity.requirents.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.code}</a>
-                    {courseEntity.requirents && i === courseEntity.requirents.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
+          <dt>Job</dt>
+          <dd>{courseEntity.job ? courseEntity.job.id : ''}</dd>
           <dt>Course</dt>
           <dd>{courseEntity.course ? courseEntity.course.id : ''}</dd>
         </dl>

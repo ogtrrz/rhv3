@@ -48,6 +48,8 @@ export const ToDoDetail = () => {
             <span id="link">Link</span>
           </dt>
           <dd>{toDoEntity.link}</dd>
+          <dt>Employee</dt>
+          <dd>{toDoEntity.employee ? toDoEntity.employee.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/to-do" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

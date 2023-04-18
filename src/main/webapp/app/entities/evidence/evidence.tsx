@@ -118,6 +118,9 @@ export const Evidence = () => {
                 <th className="hand" onClick={sort('link')}>
                   Link <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  Training <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -134,6 +137,7 @@ export const Evidence = () => {
                   <td>{evidence.description}</td>
                   <td>{evidence.expiration ? <TextFormat type="date" value={evidence.expiration} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{evidence.link}</td>
+                  <td>{evidence.training ? <Link to={`/training/${evidence.training.id}`}>{evidence.training.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/evidence/${evidence.id}`} color="info" size="sm" data-cy="entityDetailsButton">

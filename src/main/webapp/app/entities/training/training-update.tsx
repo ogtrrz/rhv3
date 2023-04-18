@@ -8,8 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IEvidence } from 'app/shared/model/evidence.model';
-import { getEntities as getEvidences } from 'app/entities/evidence/evidence.reducer';
 import { ICourse } from 'app/shared/model/course.model';
 import { getEntities as getCourses } from 'app/entities/course/course.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
@@ -25,7 +23,6 @@ export const TrainingUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const evidences = useAppSelector(state => state.evidence.entities);
   const courses = useAppSelector(state => state.course.entities);
   const employees = useAppSelector(state => state.employee.entities);
   const trainingEntity = useAppSelector(state => state.training.entity);
@@ -44,7 +41,6 @@ export const TrainingUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getEvidences({}));
     dispatch(getCourses({}));
     dispatch(getEmployees({}));
   }, []);
@@ -62,7 +58,8 @@ export const TrainingUpdate = () => {
     const entity = {
       ...trainingEntity,
       ...values,
-      evidences: mapIdList(values.evidences),
+      course: courses.find(it => it.id.toString() === values.course.toString()),
+      employee: employees.find(it => it.id.toString() === values.employee.toString()),
     };
 
     if (isNew) {
@@ -82,7 +79,8 @@ export const TrainingUpdate = () => {
           ...trainingEntity,
           date: convertDateTimeFromServer(trainingEntity.date),
           expiry: convertDateTimeFromServer(trainingEntity.expiry),
-          evidences: trainingEntity?.evidences?.map(e => e.id.toString()),
+          course: trainingEntity?.course?.id,
+          employee: trainingEntity?.employee?.id,
         };
 
   return (
@@ -130,12 +128,22 @@ export const TrainingUpdate = () => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
-              <ValidatedField label="Evidence" id="training-evidence" data-cy="evidence" type="select" multiple name="evidences">
+              <ValidatedField id="training-course" name="course" data-cy="course" label="Course" type="select">
                 <option value="" key="0" />
-                {evidences
-                  ? evidences.map(otherEntity => (
+                {courses
+                  ? courses.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.description}
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="training-employee" name="employee" data-cy="employee" label="Employee" type="select">
+                <option value="" key="0" />
+                {employees
+                  ? employees.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

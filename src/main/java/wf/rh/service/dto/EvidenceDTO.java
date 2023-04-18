@@ -25,6 +25,8 @@ public class EvidenceDTO implements Serializable {
 
     private String link;
 
+    private TrainingDTO training;
+
     public Long getId() {
         return id;
     }
@@ -73,6 +75,14 @@ public class EvidenceDTO implements Serializable {
         this.link = link;
     }
 
+    public TrainingDTO getTraining() {
+        return training;
+    }
+
+    public void setTraining(TrainingDTO training) {
+        this.training = training;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,6 +114,7 @@ public class EvidenceDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", expiration='" + getExpiration() + "'" +
             ", link='" + getLink() + "'" +
+            ", training=" + getTraining() +
             "}";
     }
 }

@@ -1,9 +1,7 @@
 package wf.rh.service.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 import wf.rh.domain.enumeration.TypeCourse;
 
@@ -39,9 +37,7 @@ public class CourseDTO implements Serializable {
 
     private String link;
 
-    private Set<TrainingDTO> trainings = new HashSet<>();
-
-    private Set<RequirentsDTO> requirents = new HashSet<>();
+    private JobDTO job;
 
     private CourseDTO course;
 
@@ -125,20 +121,12 @@ public class CourseDTO implements Serializable {
         this.link = link;
     }
 
-    public Set<TrainingDTO> getTrainings() {
-        return trainings;
+    public JobDTO getJob() {
+        return job;
     }
 
-    public void setTrainings(Set<TrainingDTO> trainings) {
-        this.trainings = trainings;
-    }
-
-    public Set<RequirentsDTO> getRequirents() {
-        return requirents;
-    }
-
-    public void setRequirents(Set<RequirentsDTO> requirents) {
-        this.requirents = requirents;
+    public void setJob(JobDTO job) {
+        this.job = job;
     }
 
     public CourseDTO getCourse() {
@@ -184,8 +172,7 @@ public class CourseDTO implements Serializable {
             ", durationAuthorizationInMonth=" + getDurationAuthorizationInMonth() +
             ", description='" + getDescription() + "'" +
             ", link='" + getLink() + "'" +
-            ", trainings=" + getTrainings() +
-            ", requirents=" + getRequirents() +
+            ", job=" + getJob() +
             ", course=" + getCourse() +
             "}";
     }

@@ -2,25 +2,17 @@ package wf.rh.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,7 +21,6 @@ import wf.rh.IntegrationTest;
 import wf.rh.domain.Course;
 import wf.rh.domain.enumeration.TypeCourse;
 import wf.rh.repository.CourseRepository;
-import wf.rh.service.CourseService;
 import wf.rh.service.dto.CourseDTO;
 import wf.rh.service.mapper.CourseMapper;
 
@@ -37,7 +28,6 @@ import wf.rh.service.mapper.CourseMapper;
  * Integration tests for the {@link CourseResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class CourseResourceIT {
@@ -78,14 +68,8 @@ class CourseResourceIT {
     @Autowired
     private CourseRepository courseRepository;
 
-    @Mock
-    private CourseRepository courseRepositoryMock;
-
     @Autowired
     private CourseMapper courseMapper;
-
-    @Mock
-    private CourseService courseServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -241,23 +225,6 @@ class CourseResourceIT {
             .andExpect(jsonPath("$.[*].durationAuthorizationInMonth").value(hasItem(DEFAULT_DURATION_AUTHORIZATION_IN_MONTH)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK)));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllCoursesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(courseServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restCourseMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(courseServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllCoursesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(courseServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restCourseMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(courseRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

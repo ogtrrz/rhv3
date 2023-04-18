@@ -35,28 +35,22 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "description",
       "otherEntityName": "evidence",
       "otherEntityRelationshipName": "training",
-      "ownerSide": true,
       "relationshipName": "evidence",
-      "relationshipType": "many-to-many"
+      "relationshipType": "one-to-many"
     },
     {
-      "otherEntityField": "code",
       "otherEntityName": "course",
       "otherEntityRelationshipName": "training",
-      "ownerSide": false,
       "relationshipName": "course",
-      "relationshipType": "many-to-many"
+      "relationshipType": "many-to-one"
     },
     {
-      "otherEntityField": "user",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "training",
-      "ownerSide": false,
       "relationshipName": "employee",
-      "relationshipType": "many-to-many"
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

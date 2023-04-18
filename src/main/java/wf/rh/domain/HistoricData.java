@@ -2,8 +2,6 @@ package wf.rh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -34,9 +32,9 @@ public class HistoricData implements Serializable {
     @Column(name = "link")
     private String link;
 
-    @ManyToMany(mappedBy = "historicData")
-    @JsonIgnoreProperties(value = { "managers", "trainings", "todos", "historicData", "employee", "jobs" }, allowSetters = true)
-    private Set<Employee> employees = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "trainings", "todos", "historicData", "managers", "job", "employee" }, allowSetters = true)
+    private Employee employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -92,34 +90,16 @@ public class HistoricData implements Serializable {
         this.link = link;
     }
 
-    public Set<Employee> getEmployees() {
-        return this.employees;
+    public Employee getEmployee() {
+        return this.employee;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        if (this.employees != null) {
-            this.employees.forEach(i -> i.removeHistoricData(this));
-        }
-        if (employees != null) {
-            employees.forEach(i -> i.addHistoricData(this));
-        }
-        this.employees = employees;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public HistoricData employees(Set<Employee> employees) {
-        this.setEmployees(employees);
-        return this;
-    }
-
-    public HistoricData addEmployee(Employee employee) {
-        this.employees.add(employee);
-        employee.getHistoricData().add(this);
-        return this;
-    }
-
-    public HistoricData removeEmployee(Employee employee) {
-        this.employees.remove(employee);
-        employee.getHistoricData().remove(this);
+    public HistoricData employee(Employee employee) {
+        this.setEmployee(employee);
         return this;
     }
 

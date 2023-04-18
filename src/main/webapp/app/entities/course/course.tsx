@@ -131,6 +131,9 @@ export const Course = () => {
                   Link <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  Job <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   Course <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -153,6 +156,7 @@ export const Course = () => {
                   <td>{course.durationAuthorizationInMonth}</td>
                   <td>{course.description}</td>
                   <td>{course.link}</td>
+                  <td>{course.job ? <Link to={`/job/${course.job.id}`}>{course.job.id}</Link> : ''}</td>
                   <td>{course.course ? <Link to={`/course/${course.course.id}`}>{course.course.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
