@@ -15,7 +15,7 @@ public interface RequirentsMapper extends EntityMapper<RequirentsDTO, Requirents
     RequirentsDTO toDto(Requirents s);
 
     @Named("courseId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     CourseDTO toDtoCourseId(Course course);
 }

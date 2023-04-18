@@ -15,7 +15,7 @@ public interface HistoricDataMapper extends EntityMapper<HistoricDataDTO, Histor
     HistoricDataDTO toDto(HistoricData s);
 
     @Named("employeeId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     EmployeeDTO toDtoEmployeeId(Employee employee);
 }

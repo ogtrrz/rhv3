@@ -15,7 +15,7 @@ public interface EvidenceMapper extends EntityMapper<EvidenceDTO, Evidence> {
     EvidenceDTO toDto(Evidence s);
 
     @Named("trainingId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     TrainingDTO toDtoTrainingId(Training training);
 }

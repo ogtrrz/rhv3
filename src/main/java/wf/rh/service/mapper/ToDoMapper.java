@@ -15,7 +15,7 @@ public interface ToDoMapper extends EntityMapper<ToDoDTO, ToDo> {
     ToDoDTO toDto(ToDo s);
 
     @Named("employeeId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     EmployeeDTO toDtoEmployeeId(Employee employee);
 }

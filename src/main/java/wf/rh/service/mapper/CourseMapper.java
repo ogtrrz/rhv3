@@ -16,12 +16,12 @@ public interface CourseMapper extends EntityMapper<CourseDTO, Course> {
     CourseDTO toDto(Course s);
 
     @Named("courseId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     CourseDTO toDtoCourseId(Course course);
 
     @Named("jobId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     JobDTO toDtoJobId(Job job);
 }

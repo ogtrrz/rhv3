@@ -18,12 +18,12 @@ public interface TrainingMapper extends EntityMapper<TrainingDTO, Training> {
     TrainingDTO toDto(Training s);
 
     @Named("courseId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     CourseDTO toDtoCourseId(Course course);
 
     @Named("employeeId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     EmployeeDTO toDtoEmployeeId(Employee employee);
 }
